@@ -136,6 +136,7 @@ const Verification: React.FC = () => {
                         borderRadius: '5px',
                         border: '1px solid #ccc',
                         boxSizing: 'border-box',
+                        color: 'black',
                     }}
                 />
             </label>
