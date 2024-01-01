@@ -6,29 +6,10 @@ import { ethers } from "ethers";
 import contractConfig from "../config.js";
 
 const Verification: React.FC = () => {
-    const [tokenId, setTokenId] = useState("");
+    const [VCURI, setVCURI] = useState("");
     const [verificationResult, setVerificationResult] = useState<string | null>(null);
-    const [metaMaskConnected, setMetaMaskConnected] = useState(false);
-    const [connectedAccount, setConnectedAccount] = useState(""); // ここで connectedAccount を useState で宣言
 
     let contract: ethers.Contract;
-    const connectMetaMask = async () => {
-        try {
-            // MetaMaskに接続リクエストを送信
-            const accounts = await window.ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            if (accounts.length > 0) {
-                const connectedAccount = accounts[0];
-                setConnectedAccount(connectedAccount); // state を更新
-                setMetaMaskConnected(true);
-                // 他の初期化処理などを追加する場合はここで実施
-            }
-        } catch (error) {
-            console.error("MetaMask connection error", error);
-            setMetaMaskConnected(false);
-        }
-    };
 
     const verify = async () => {
         try {
@@ -42,26 +23,10 @@ const Verification: React.FC = () => {
                 contractConfig.abi,
                 signer
             );
-            console.log(metaMaskConnected);
             console.log(contract);
-            if (metaMaskConnected && contract) {
-                try {
-                    // 入力されたSBTのidのURIを取得
-                    // 失敗したらエラーをキャッチし、Token doesn't existというエラーメッセージを返す
-                    await contract.tokenURI(tokenId);
-                } catch (error) {
-                    console.error("Error fetching token URI", error);
-                    // トークンが存在しない場合
-                    setVerificationResult("Token doesn't exist");
-                    return;
-                }
-                const sbtMetadataUrl = await contract.tokenURI(tokenId);
-                const response = await axios.get(sbtMetadataUrl);
-                const sbtMetadata = response.data;
-
+            if (contract) {
                 // VCのメタデータをIPFSから取得
-                const vcMetadataUrl = sbtMetadata.verifiableCredentials[0];
-                const vcResponse = await axios.get(vcMetadataUrl);
+                const vcResponse = await axios.get(VCURI);
                 const vcMetadata = vcResponse.data;
 
                 // VCデータをJSONファイルに変換
@@ -83,7 +48,7 @@ const Verification: React.FC = () => {
                 の場合は文字数が46を超えることを利用 */
                 setVerificationResult(result.length > 46 ? 'Verification failed!' : 'Verified');
             } else {
-                console.error("MetaMask is not connected or contract is not initialized.");
+                console.error("Contract is not initialized.");
             }
         } catch (error) {
             console.error("検証エラー", error);
@@ -95,46 +60,21 @@ const Verification: React.FC = () => {
 
     return (
         <div>
-            <h1 style={{ fontSize: '30px' }}>VC Verification for holders</h1>
-            <p>This is the page for cert holders.</p>
+            <h1 style={{ fontSize: '30px' }}>VC Verification for verifiers</h1>
+            <p>Although this is the page for verifiers, holders are also able to verifry certs here by filling in VC's URI.</p>
             {/* ↓<a></a>は要らない */}
-            <Link href="/Verification_verifier">
-                <h1 style={{ textDecoration: 'underline', fontSize: '15px' }}>Go to verifier's page</h1>
+            <Link href="/">
+                <h1 style={{ textDecoration: 'underline', fontSize: '15px' }}>Back to holder's page</h1>
             </Link>
             <p><br></br></p>
-            {/* Connect to MetaMask button */}
-            {
-                metaMaskConnected ? (
-                    <div>
-                        <p>Connected to MetaMask</p>
-                        {/* 接続されたアカウントを表示 */}
-                        <p>{connectedAccount}</p>
-                    </div>
-                ) : (
-                    <div>
-                        <button
-                            style={{
-                                backgroundColor: 'blue',
-                                color: 'white',
-                                padding: '10px',
-                                border: 'none',
-                                borderRadius: '5px',
-                                cursor: 'pointer',
-                            }}
-                            onClick={connectMetaMask}
-                        >
-                            Connect to MetaMask
-                        </button><br />
-                    </div>)
-            }
 
             {/* SBTのURI入力フォーム */}
             <label>
-                TokenId:
+                VC URI:
                 <input
                     type="text"
-                    value={tokenId}
-                    onChange={(e) => setTokenId(e.target.value)}
+                    value={VCURI}
+                    onChange={(e) => setVCURI(e.target.value)}
                     style={{
                         padding: '8px',
                         margin: '5px 0',
