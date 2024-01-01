@@ -13,16 +13,38 @@ const Verification: React.FC = () => {
 
     let contract: ethers.Contract;
     const connectMetaMask = async () => {
+        // try {
+        //     // MetaMaskに接続リクエストを送信
+        //     const accounts = await window.ethereum.request({
+        //         method: "eth_requestAccounts",
+        //     });
+        //     if (accounts.length > 0) {
+        //         const connectedAccount = accounts[0];
+        //         setConnectedAccount(connectedAccount); // state を更新
+        //         setMetaMaskConnected(true);
+        //         // 他の初期化処理などを追加する場合はここで実施
+        //     }
         try {
-            // MetaMaskに接続リクエストを送信
-            const accounts = await window.ethereum.request({
-                method: "eth_requestAccounts",
-            });
-            if (accounts.length > 0) {
-                const connectedAccount = accounts[0];
-                setConnectedAccount(connectedAccount); // state を更新
-                setMetaMaskConnected(true);
-                // 他の初期化処理などを追加する場合はここで実施
+            // Check if MetaMask is present
+            if (window.ethereum) {
+                const accounts = await window.ethereum.request({
+                    method: "eth_requestAccounts",
+                });
+                if (accounts.length > 0) {
+                    const connectedAccount = accounts[0];
+                    setConnectedAccount(connectedAccount);
+                    setMetaMaskConnected(true);
+                }
+            } else {
+                // Ask for user confirmation before redirecting to MetaMask Mobile installation page
+                const userConfirmed = window.confirm("MetaMask not found. Would you like to install MetaMask Mobile?");
+
+                if (userConfirmed) {
+                    window.location.href = "https://portfolio.metamask.io/";
+                } else {
+                    // Handle the case when the user chooses not to install MetaMask Mobile
+                    console.log("User chose not to install MetaMask Mobile.");
+                }
             }
         } catch (error) {
             console.error("MetaMask connection error", error);
