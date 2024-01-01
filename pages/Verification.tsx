@@ -99,7 +99,7 @@ const Verification: React.FC = () => {
             <p>This is the page for cert holders.</p>
             {/* ↓<a></a>は要らない */}
             <Link href="/Verification_verifier">
-                <h1 style={{ textDecoration: 'underline', fontSize: '15px' }}>Go to verifier's page</h1>
+                <h1 style={{ textDecoration: 'underline', fontSize: '15px' }}>Go to verifier&apos;s page</h1>
             </Link>
             <p><br></br></p>
             {/* Connect to MetaMask button */}
