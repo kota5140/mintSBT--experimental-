@@ -2,64 +2,35 @@
 import React, { useState } from 'react';
 import Link from 'next/link'; // Import Link from next/link
 import axios from "axios";
-import { ethers } from "ethers";
-import contractConfig from "../config.js";
 
 const Verification: React.FC = () => {
     const [VCURI, setVCURI] = useState("");
     const [verificationResult, setVerificationResult] = useState<string | null>(null);
 
-    let contract: ethers.Contract;
-
     const verify = async () => {
         try {
             console.log("検証スタート");
-            // contract
-            let provider;
+            // VCのメタデータをIPFSから取得
+            const vcResponse = await axios.get(VCURI);
+            const vcMetadata = vcResponse.data;
 
-            if (window.ethereum) {
-                // Check if MetaMask is present
-                provider = new ethers.BrowserProvider(window.ethereum);
-            } else {
-                // Handle the case when MetaMask is not present
-                console.error("MetaMask not detected.");
-                return;
-            }
+            // VCデータをJSONファイルに変換
+            const vcJsonString = JSON.stringify(vcMetadata);
 
-            const signer = await provider.getSigner();
-            /* Goerliネットワーク上にあるコントラクトを使えるようにしまっせということ */
-            contract = new ethers.Contract(
-                contractConfig.address,
-                contractConfig.abi,
-                signer
+            // VCの検証
+            const didkit = await import("@spruceid/didkit-wasm");
+            const proofOptions = {};
+            const result = await didkit.verifyCredential(
+                vcJsonString,
+                JSON.stringify(proofOptions)
             );
-            console.log(contract);
-            if (contract) {
-                // VCのメタデータをIPFSから取得
-                const vcResponse = await axios.get(VCURI);
-                const vcMetadata = vcResponse.data;
 
-                // VCデータをJSONファイルに変換
-                const vcJsonString = JSON.stringify(vcMetadata);
-
-                // VCの検証
-                const didkit = await import("@spruceid/didkit-wasm");
-                const proofOptions = {};
-                const result = await didkit.verifyCredential(
-                    vcJsonString,
-                    JSON.stringify(proofOptions)
-                );
-
-                console.log(result);
-                console.log(result.length);
-                // 検証結果をstateにセット
-                /* resultの結果が
-                {"checks":["proof"],"warnings":[],"errors":["signature error: Verification equation was not satisfied"]}
-                の場合は文字数が46を超えることを利用 */
-                setVerificationResult(result.length > 46 ? 'Verification failed!' : 'Verified');
-            } else {
-                console.error("Contract is not initialized.");
-            }
+            console.log(result);
+            // 検証結果をstateにセット
+            /* resultの結果が
+            {"checks":["proof"],"warnings":[],"errors":["signature error: Verification equation was not satisfied"]}
+            の場合は文字数が46を超えることを利用 */
+            setVerificationResult(result.length > 46 ? 'Verification failed!' : 'Verified');
         } catch (error) {
             console.error("検証エラー", error);
 
