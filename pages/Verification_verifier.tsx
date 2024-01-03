@@ -15,7 +15,17 @@ const Verification: React.FC = () => {
         try {
             console.log("検証スタート");
             // contract
-            const provider = new ethers.BrowserProvider(window.ethereum);
+            let provider;
+
+            if (window.ethereum) {
+                // Check if MetaMask is present
+                provider = new ethers.BrowserProvider(window.ethereum);
+            } else {
+                // Handle the case when MetaMask is not present
+                console.error("MetaMask not detected.");
+                return;
+            }
+
             const signer = await provider.getSigner();
             /* Goerliネットワーク上にあるコントラクトを使えるようにしまっせということ */
             contract = new ethers.Contract(
