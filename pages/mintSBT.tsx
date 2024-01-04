@@ -17,7 +17,7 @@ export type Props = {
     id: InputHTMLAttributes<HTMLInputElement>["id"];
 };
 
-const IndexPage: React.FC = () => {
+const IndexPage: React.FC = async () => {
     const [account, setAccount] = useState<string | null>(null);
     const [contract, setContract] = useState<any | null>(null);
     const [toAddress, setToAddress] = useState<string>('');
