@@ -59,6 +59,21 @@ const Verification: React.FC = () => {
                     Back to holder&apos;s page
                 </button>
             </Link>
+            <br></br>
+            <Link href="/mintSBT">
+                <button
+                    style={{
+                        textDecoration: 'underline',
+                        fontSize: '15px',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        color: '#0070f3'
+                    }}
+                >
+                    Go to our cert minting page
+                </button>
+            </Link>
             <p><br></br></p>
 
             {/* SBTのURI入力フォーム */}
