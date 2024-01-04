@@ -1,4 +1,4 @@
-const DIDKit = require("../../lib/didkit_vc/didkit-wasm-node/didkit_wasm");
+const DIDKit = require("../../didkit_vc/didkit-wasm-node/didkit_wasm");
 const fs = require("fs");
 // cryptoモジュールはVCの id フィールドに一意な値を生成するために使用されます。
 const crypto = require("crypto");
