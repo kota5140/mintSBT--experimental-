@@ -1,107 +1,69 @@
 <!DOCTYPE html>
 <html lang="ja">
-  <head>
-    <meta
-      http-equiv="Content-Type"
-      content="application/javascript; charset=UTF-8"
-    />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>SSICerts</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
-    <link rel="stylesheet" href="./css/style.css" />
-  </head>
 
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container">
-        <a class="navbar-brand" href="#">SSICerts</a>
-      </div>
-    </nav>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SSICerts</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+  <link rel="stylesheet" href="./css/styles.css">
+</head>
 
-    <div class="container my-5">
-      <h1>Accounts</h1>
-      <div class="col-lg-8 px-0">
-        <p id="accountStatus">Not Connected</p>
-        <button
-          id="connectButton"
-          disabled
-          type="button"
-          class="btn btn-primary"
-        >
-          Checking
-        </button>
-      </div>
+<body>
+
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">SSICerts</a>
     </div>
+  </nav>
 
-    <div class="container my-5">
-      <h3>Your certs</h3>
-      <form>
-        <!-- SBTのメタデータ -->
-        <button
-          id="getOwnedSBTsButton"
-          disabled
-          type="button"
-          class="btn btn-success"
-        >
-          Display your certs
-        </button>
-        <p id="ownedSBTsList"></p>
-      </form>
-      <h3>Verify certs</h3>
-      <form>
-        <!-- SBTのメタデータ -->
-        <div class="mb-3">
-          <input
-            id="URIInput"
-            type="text"
-            class="form-control"
-            placeholder="Enter URI of SBT"
-          />
-        </div>
-        <button
-          id="verifyButton"
-          disabled
-          type="button"
-          class="btn btn-success"
-          placeholder="Enter message or URI"
-        >
-          Verify
-        </button>
-        <p id="verifyStatus"></p>
-      </form>
-      <h3>Burn certs</h3>
-      <form>
-        <div class="mb-3">
-          <input
-            id="idInput"
-            type="text"
-            class="form-control"
-            placeholder="Enter id"
-          />
-        </div>
-        <button
-          id="burnButton"
-          disabled
-          type="button"
-          class="btn btn-success"
-          placeholder="Enter message or URI"
-        >
-          Burn
-        </button>
-        <p id="burnStatus"></p>
-      </form>
+  <div class="container my-5">
+    <h1>Accounts</h1>
+    <div class="col-lg-8 px-0">
+      <p id="accountStatus">Not Connected</p>
+      <button id="connectButton" disabled type="button" class="btn btn-primary">Checking</button>
     </div>
+  </div>
 
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-      crossorigin="anonymous"
-    ></script>
-    <script type="module" src="../js/User.js"></script>
-  </body>
+  <div class="container my-5">
+    <h3>➤Your certs</h3>
+    <form>
+      <!-- SBTのメタデータ -->
+      <button id="getOwnedSBTsButton" disabled type="button" class="btn btn-success">Display your certs</button>
+      <p id="ownedSBTsList"></p>
+    </form>
+    <h3>➤Verify your certs</h3>
+    <form>
+      <!-- SBTのメタデータ -->
+      <button id="verifyButton" type="button" class="btn btn-success">Move to our verification site</button>
+    </form>
+
+    <h3>➤Burn your certs</h3>
+    <form>
+      <div class="mb-3">
+        <input id="idInputOfBurn" type="text" class="form-control" placeholder="Enter id">
+      </div>
+      <button id="burnButton" disabled type="button" class="btn btn-success"
+        placeholder="Enter message or URI">Burn</button>
+      <p id="burnStatus"></p>
+    </form>
+
+    <h3>➤Disclose information of your certs to other institutions</h3>
+    <form>
+      <div class="mb-3">
+        <input id="idInputOfDisclosure" type="text" class="form-control" placeholder="Enter id">
+      </div>
+      <button id="discloseButton" disabled type="button" class="btn btn-success">Create the disclosure
+        link</button>
+      <p id="discloseStatus"></p>
+    </form>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
+  <script type="module" src="../js/User.js"></script>
+</body>
+
 </html>

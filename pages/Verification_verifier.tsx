@@ -7,6 +7,7 @@ const Verification: React.FC = () => {
     const [VCURI, setVCURI] = useState("");
     const [verificationResult, setVerificationResult] = useState<string | null>(null);
 
+
     const verify = async () => {
         try {
             console.log("検証スタート");

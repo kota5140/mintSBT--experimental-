@@ -1,5 +1,15 @@
 import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
-import { contractConfig } from "../../config.js";
+// import { verifyCredential } from "../../didkit_vc/didkit-wasm-node/didkit_wasm.js";
+import contractConfig from "../../config.js";
+
+/* イベントハンドラ（イベントが発生した際にやる処理. 下に発動条件がある） */
+const onClickVerify = () => {
+  // 任意のリンクに移動するための URL を指定します
+  const verificationSiteLink = "https://vc-verification.vercel.app/";
+
+  // クリックしたら指定のリンクに移動します
+  window.location.href = verificationSiteLink;
+};
 
 const main = () => {
   console.log("main START");
@@ -11,14 +21,18 @@ const main = () => {
   const getOwnedSBTsButton = document.getElementById("getOwnedSBTsButton");
   const ownedSBTsList = document.getElementById("ownedSBTsList");
 
+  /* verifyButtonというidが与えられているボタン（要素）を取得 */
   const verifyButton = document.getElementById("verifyButton");
-  const URIInput = document.getElementById("URIInput");
-  const verifyStatus = document.getElementById("verifyStatus");
+  /* verifyButtonがクリックされた時のイベントハンドラ（イベントが発生した際にやる処理） */
+  verifyButton.onclick = onClickVerify;
 
   const burnButton = document.getElementById("burnButton");
-  const idInput = document.getElementById("idInput");
+  const idInputOfBurn = document.getElementById("idInputOfBurn");
   const burnStatus = document.getElementById("burnStatus");
 
+  const discloseButton = document.getElementById("discloseButton");
+  const idInputOfDisclosure = document.getElementById("idInputOfDisclosure");
+  const discloseStatus = document.getElementById("discloseStatus");
   // variable
   let account;
   let contract;
@@ -44,9 +58,9 @@ const main = () => {
         getOwnedSBTsButton.disabled = false;
         getOwnedSBTsButton.onclick = getOwnedSBTs;
         burnButton.disabled = false;
-        verifyButton.disabled = false;
         burnButton.onclick = onClickBurn;
-        verifyButton.onclick = onClickVerify;
+        discloseButton.disabled = false;
+        discloseButton.onclick = disclosure;
 
         // contract
         const provider = new ethers.BrowserProvider(window.ethereum);
@@ -65,6 +79,7 @@ const main = () => {
   };
 
   const getOwnedSBTs = async () => {
+    console.log("#getOwnedSBTs");
     try {
       // Call the balanceOf function of the ERC721 contract to get the number of NFTs owned by the user
       const balance = await contract.balanceOf(account);
@@ -115,92 +130,104 @@ const main = () => {
       console.error(error);
       alert("Error while fetching owned SBTs");
     }
-  };
+  }
 
   const onClickBurn = async () => {
     console.log("#onClickBurn");
 
     try {
-      const id = idInput.value;
+      const id_burn = idInputOfBurn.value;
 
       // Ensure there is a valid recipient address
       // Check if the recipient address is valid
-      if (!id) {
+      if (!id_burn) {
         alert("Please enter an id");
         return;
       }
 
       // Call the smart contract's burn function
-      const burnTx = await contract.burn(id);
+      const burnTx = await contract.burn(id_burn);
       await burnTx.wait();
 
       // Display success message
       burnStatus.innerHTML = `Burned`;
 
       // Clear input fields after successful burn
-      idInput.value = "";
+      idInputOfBurn.value = "";
     } catch (error) {
       console.error(error);
       alert("Error while burning token");
     }
   };
 
-  const onClickVerify = async () => {
-    console.log("#onClickVerify");
+  const disclosure = async () => {
+    console.log("#disclosure");
 
     try {
-      const URI = URIInput.value;
+      const id_dis = idInputOfDisclosure.value;
 
-      // Ensure there is a valid URI
-      if (!URI) {
-        alert("Please enter a URI");
+      if (!id_dis) {
+        alert("Please enter an id");
         return;
       }
 
-      // Import didkit module
-      const didkit = await import("@spruceid/didkit-wasm");
+      /* idからそのtokenが存在しない場合はここでエラーを出す */
+      await contract.tokenURI(id_dis);
 
-      console.log(didkit);
-      // Sample verifiable credential
-      const signedSampleVc = {
-        "@context": "https://www.w3.org/2018/credentials/v1",
-        id: "urn:uuid:86a109aa-a3f6-4374-b46f-92c58fcb16a1",
-        type: ["VerifiableCredential"],
-        credentialSubject: {
-          id: "did:example:my-data-subject-identifier",
-        },
-        issuer: "did:key:z6Mkv2hGUtUdKdEVdqc7esowafyriuqPvxQFnVTrRqjMknj2",
-        issuanceDate: "2023-01-08T18:23:56Z",
-        proof: {
-          type: "Ed25519Signature2018",
-          proofPurpose: "assertionMethod",
-          verificationMethod:
-            "did:key:z6Mkv2hGUtUdKdEVdqc7esowafyriuqPvxQFnVTrRqjMknj2#z6Mkv2hGUtUdKdEVdqc7esowafyriuqPvxQFnVTrRqjMknj2",
-          created: "2023-01-08T07:43:50.818Z",
-          jws: "eyJhbGciOiJFZERTQSIsImNyaXQiOlsiYjY0Il0sImI2NCI6ZmFsc2V9..jyR9O8nb-ino0TXSCAhUdP2Z9iBc0E-aX7tyTHcFuOzOGd_uWpwHhA4gTOX961SUHB0un34e2YV41qc2lk0nCw",
-        },
-      };
+      const userChoice1 = confirm("Do you want to disclose full information?");
 
-      // Verify the verifiable credential
-      const proofOptions = {};
-      const result = await didkit.verifyCredential(
-        JSON.stringify(signedSampleVc),
-        JSON.stringify(proofOptions)
-      );
+      if (userChoice1) {
+        fullydisclose();
+      } else {
+        const userChoice2 = confirm("Are you going to partially disclose information?");
+        if (userChoice2) {
+          partiallydisclose();
+        }
+      }
 
-      console.log(result);
-
-      // Display success message
-      verifyStatus.innerHTML = `Verified`;
-
-      // Clear input field after successful verification
-      URIInput.value = "";
     } catch (error) {
       console.error(error);
-      alert("Error while verifying token");
+      alert("Error while fetching token");
     }
-  };
+  }
 
+  const fullydisclose = async (id) => {
+    console.log("#fullydisclose");
+    /* ちゃんと初期化しましょう */
+    id = idInputOfDisclosure.value;
+    try {
+      const sbtMetadataUrl = await contract.tokenURI(id);
+      const response = await fetch(sbtMetadataUrl);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch data from ${sbtMetadataUrl}`);
+      }
+
+      const sbtMetadata = await response.json();
+
+      // VCのメタデータをIPFSから取得
+      const vcMetadataUrl = sbtMetadata.verifiableCredentials[0];
+      /* full VCのリンク表示 */
+      discloseStatus.innerHTML = vcMetadataUrl;
+    } catch (error) {
+      console.error(error);
+      alert("Error while fetching full VC");
+    }
+  }
+
+  /* 未実装 */
+  const partiallydisclose = async () => {
+    console.log("#partiallydisclose");
+
+    try {
+
+      // Display success message
+      discloseStatus.innerHTML = "";
+    } catch (error) {
+      console.error(error);
+      alert("Error while fetching partial VC");
+    }
+  }
   // --------------------
   // Initialize Functions
   // --------------------
@@ -217,6 +244,7 @@ const main = () => {
       connectButton.disabled = false;
     }
   };
+
   checkMetaMaskClient();
 };
 
