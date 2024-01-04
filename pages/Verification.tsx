@@ -103,12 +103,22 @@ const Verification: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1 style={{ fontSize: '30px' }}>VC Verification for holders</h1>
-            <p>This is the page for cert holders.</p>
-            {/* ↓<a></a>は要らない */}
+        <div style={{ textAlign: 'center' }}>
+            <h1 style={{ fontSize: '30px', margin: '20px' }}>VC Verification for holders</h1>
+            <p style={{ fontSize: '16px', color: '#666', marginBottom: '20px' }}>This is the page for cert holders.</p>
             <Link href="/Verification_verifier">
-                <h1 style={{ textDecoration: 'underline', fontSize: '15px' }}>Go to verifier&apos;s page</h1>
+                <button
+                    style={{
+                        textDecoration: 'underline',
+                        fontSize: '15px',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        color: '#0070f3'
+                    }}
+                >
+                    Go to holder's page
+                </button>
             </Link>
             <p><br></br></p>
             {/* Connect to MetaMask button */}

@@ -40,12 +40,23 @@ const Verification: React.FC = () => {
     };
 
     return (
-        <div>
-            <h1 style={{ fontSize: '30px' }}>VC Verification for verifiers</h1>
-            <p>Although this is the page for verifiers, holders are also able to verifry certs here by filling in VC URI.</p>
+        <div style={{ textAlign: 'center' }}>
+            <h1 style={{ fontSize: '30px', margin: '20px 0' }}>VC Verification for verifiers</h1>
+            <p style={{ fontSize: '16px', color: '#666', marginBottom: '20px' }}>Although this is the page for verifiers, holders are also able to verifry certs here by filling in VC URI.</p>
             {/* ↓<a></a>は要らない */}
             <Link href="/">
-                <h1 style={{ textDecoration: 'underline', fontSize: '15px' }}>Back to holder&apos;s page</h1>
+                <button
+                    style={{
+                        textDecoration: 'underline',
+                        fontSize: '15px',
+                        backgroundColor: 'transparent',
+                        border: 'none',
+                        cursor: 'pointer',
+                        color: '#0070f3'
+                    }}
+                >
+                    Back to holder&apos;s page
+                </button>
             </Link>
             <p><br></br></p>
 
