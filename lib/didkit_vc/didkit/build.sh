@@ -1,0 +1,1 @@
+docker run -v $PWD:/app -it --rm rust bash -c "cargo install wasm-pack && cd /app/didkit/lib/web && wasm-pack build --out-dir /app/didkit-wasm-node --target nodejs"
