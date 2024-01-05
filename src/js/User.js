@@ -1,5 +1,5 @@
 import { ethers } from "https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.min.js";
-import { contractConfig } from "./config.js";
+import { contractConfig } from "../../config.js";
 
 const main = () => {
   console.log("main START");
@@ -158,9 +158,7 @@ const main = () => {
       }
 
       // Import didkit module
-      const didkit = await import(
-        "../../node_modules/@spruceid/didkit-wasm/didkit_wasm.js"
-      );
+      const didkit = await import("@spruceid/didkit-wasm");
 
       console.log(didkit);
       // Sample verifiable credential
