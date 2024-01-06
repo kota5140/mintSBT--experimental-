@@ -7,14 +7,14 @@ const theme = createTheme({
       main: deepPurple[900],
     },
     action: {
-      hover: deepPurple[500], // ホバー時の色
-      active: deepPurple[500], // クリック時の色
+      hover: deepPurple[100], // ホバー時の色
+      active: deepPurple[300], // クリック時の色
     },
     background: {
-      default: deepPurple[500],
+      default: deepPurple[50],
     },
     secondary: {
-      main: deepPurple[500],
+      main: deepPurple[700],
     },
   },
 });

@@ -1,17 +1,12 @@
-import { makeStyles } from "@mui/styles";
+import { styled } from "@mui/system";
 import clsx from "clsx";
 
-const useStyles = makeStyles((theme) => ({
-  // Define your MUI styles here
-  example: {
-    // Your MUI styles go here
-    color: "red",
-  },
-}));
+const Example = styled("div")({
+  color: "red",
+});
 
 export function cn(...inputs: (string | undefined)[]) {
-  const classes = useStyles();
-  return clsx(classes.example, ...inputs);
+  return clsx(Example, ...inputs);
 }
 
 export const formatBalance = (rawBalance: string): string => {

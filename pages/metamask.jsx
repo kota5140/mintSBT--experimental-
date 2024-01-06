@@ -7,6 +7,8 @@ import Button from "@mui/material/Button";
 import { useSDK, MetaMaskProvider } from "@metamask/sdk-react";
 import { formatAddress } from "../lib/utils";
 import { useRouter } from "next/router";
+import contractConfig from "../config";
+import { setLoginStatus } from "./_app";
 
 export const ConnectWalletButton = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -32,19 +34,22 @@ export const ConnectWalletButton = () => {
     } catch (err) {
       console.warn("Connection failed", err);
       alert("Connection failed");
+    }
+    if (!sdk) {
       router.reload();
     }
   };
 
   const disconnect = () => {
     if (sdk) {
+      setLoginStatus(false);
       sdk.terminate();
-      router.reload();
     }
   };
 
   useEffect(() => {
     if (connected) {
+      setLoginStatus(true);
       router.push("/mypage");
     }
   }, [connected]);
@@ -76,7 +81,7 @@ export const ConnectWalletButton = () => {
               variant="contained"
             >
               <Link
-                href="/index"
+                href="/"
                 className="block w-full pl-2 pr-4 py-2 text-left text-[#F05252] hover:bg-gray-200"
               >
                 Disconnect
