@@ -1,33 +1,32 @@
-import { useEffect, useState } from 'react';
+// useGetImageUrl.ts
+import { useState, useEffect } from 'react';
+import pinFileToIPFS from '../src/js/pintoipfs'; // このパスは実際のファイルのパスに変更してください
 
-type Args = {
+type UseGetImageUrlProps = {
     file: File | null;
 };
 
-export const useGetImageUrl = ({ file }: Args) => {
-    const [imageUrl, setImageUrl] = useState('');
+export const useGetImageUrl = ({ file }: UseGetImageUrlProps) => {
+    const [imageUrl, setImageUrl] = useState<string | null>(null);
 
     useEffect(() => {
-        if (!file) {
-            return;
-        }
-
-        let reader: FileReader | null = new FileReader();
-        reader.onloadend = () => {
-            // base64のimageUrlを生成する。
-            const base64 = reader && reader.result;
-            if (base64 && typeof base64 === 'string') {
-                setImageUrl(base64);
+        const pinImageToIPFS = async () => {
+            if (file) {
+                try {
+                    // ファイルをIPFSにアップロードし、リンクを取得
+                    const ipfsLink = await pinFileToIPFS(file);
+                    setImageUrl('https://ipfs.io/ipfs/' + ipfsLink);
+                } catch (error) {
+                    console.error('Error pinning image to IPFS:', error);
+                }
+            } else {
+                setImageUrl(null);
             }
         };
-        reader.readAsDataURL(file);
 
-        return () => {
-            reader = null;
-        };
+        pinImageToIPFS();
     }, [file]);
+    console.log(imageUrl);
 
-    return {
-        imageUrl,
-    };
+    return { imageUrl };
 };

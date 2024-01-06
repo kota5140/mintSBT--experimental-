@@ -1,4 +1,4 @@
-// pages/index.tsx
+// pages/mintSBT.tsx
 
 import { useEffect, useState } from 'react';
 import React, { InputHTMLAttributes, forwardRef } from "react";
@@ -8,7 +8,7 @@ import contractConfig from '../config'; // Update the path based on your project
 import { useRef } from "react";
 import InputImage from "../othertsx/index";
 import { useGetImageUrl } from "../othertsx/useGetImageUrl";
-import Image from 'next/image';
+import { useGetJsonUrl } from "../othertsx/useGetJsonUrl";
 
 const IMAGE_ID = "imageId";
 const FIELD_SIZE = 210;
@@ -26,6 +26,7 @@ const IndexPage: React.FC = () => {
     const [mintStatus, setMintStatus] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
+    const [jsonData, setJsonData] = useState<any | null>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget?.files && e.currentTarget.files[0]) {
@@ -44,6 +45,7 @@ const IndexPage: React.FC = () => {
 
     // state (imageFile)が更新されたら、画像URLを作成する。
     const { imageUrl } = useGetImageUrl({ file: imageFile });
+    const { jsonUrl } = useGetJsonUrl({ string: jsonData });
 
     useEffect(() => {
         const checkMetaMaskClient = async () => {
@@ -90,21 +92,33 @@ const IndexPage: React.FC = () => {
 
     const onClickMint = async () => {
         try {
-            if (!toAddress || !name) {
+            createJsonData();
+            if (!toAddress || !jsonUrl) {
                 // Handle validation errors
                 return;
             }
-
-            const mintTx = await contract.safeMint(toAddress, name);
+            const mintTx = await contract.safeMint(toAddress, jsonUrl);
             await mintTx.wait();
 
             setMintStatus(`Minted token to ${toAddress}`);
             setToAddress('');
-            setName('');
+            setJsonData(null);
         } catch (error) {
             console.error(error);
             // Handle minting error
         }
+    };
+
+    const createJsonData = async () => {
+        // 作成するJSONファイルのデータを構築
+        setJsonData({
+            name,
+            description,
+            image: imageUrl, // ここは実際の画像URIに変更する必要があります
+            attributes: [{ value: 1 }],
+            verifiableCredentials: [""],
+        });
+        console.log(jsonData);
     };
 
     return (
@@ -220,7 +234,7 @@ const IndexPage: React.FC = () => {
                                 style={{ objectFit: "cover", width: "100%", height: "100%" }}
                             />
                         ) : (
-                            "+ 画像をアップロード"
+                            "+ Upload an image (This might take a while)"
                         )}
                         {/* ダミーインプット: 見えない */}
                         <InputImage
@@ -246,7 +260,7 @@ const IndexPage: React.FC = () => {
                             margin: '0 auto', // これを追加して中央寄せ
                         }}
                     >
-                        キャンセル
+                        Cancel
                     </button>
 
                 </>

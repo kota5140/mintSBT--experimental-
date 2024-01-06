@@ -1,4 +1,4 @@
-// InputImage/index.tsx
+// othertsx/index.tsx
 
 import React, { InputHTMLAttributes, forwardRef } from "react";
 
