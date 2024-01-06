@@ -17,7 +17,7 @@ export type Props = {
     id: InputHTMLAttributes<HTMLInputElement>["id"];
 };
 
-const IndexPage: React.FC = async () => {
+const IndexPage: React.FC = () => {
     const [account, setAccount] = useState<string | null>(null);
     const [contract, setContract] = useState<any | null>(null);
     const [toAddress, setToAddress] = useState<string>('');
@@ -214,7 +214,7 @@ const IndexPage: React.FC = async () => {
                         }}
                     >
                         {imageUrl && imageFile ? (
-                            <Image
+                            <img
                                 src={imageUrl}
                                 alt="アップロード画像"
                                 style={{ objectFit: "cover", width: "100%", height: "100%" }}
