@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [setIsLoggedIn]);
 
   useEffect(() => {
-    if (!isLoggedIn && router.pathname === "/mypage") {
+    if (!isLoggedIn && router.pathname != "/") {
       alert("You need to login to access this page");
       router.push("/");
     }
