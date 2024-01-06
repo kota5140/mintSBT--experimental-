@@ -1,13 +1,15 @@
 "use client";
-import React, { useState } from 'react';
-import Link from 'next/link'; // Import Link from next/link
+import React, { useState } from "react";
+import Link from "next/link"; // Import Link from next/link
 import axios from "axios";
 import { ethers } from "ethers";
 import contractConfig from "../config.js";
 
 const Verification: React.FC = () => {
     const [tokenId, setTokenId] = useState("");
-    const [verificationResult, setVerificationResult] = useState<string | null>(null);
+    const [verificationResult, setVerificationResult] = useState<string | null>(
+        null
+    );
     const [metaMaskConnected, setMetaMaskConnected] = useState(false);
     const [connectedAccount, setConnectedAccount] = useState(""); // ここで connectedAccount を useState で宣言
 
@@ -30,7 +32,9 @@ const Verification: React.FC = () => {
 
                 if (userConfirmed) {
                     /* 未実装 */
-                    window.confirm("We currently do not provide support for mobile phones.");
+                    window.confirm(
+                        "We currently do not provide support for mobile phones."
+                    );
                 }
             }
         } catch (error) {
@@ -88,17 +92,21 @@ const Verification: React.FC = () => {
                 console.log(result.length);
                 // 検証結果をstateにセット
                 /* resultの結果が
-                {"checks":["proof"],"warnings":[],"errors":["signature error: Verification equation was not satisfied"]}
-                の場合は文字数が46を超えることを利用 */
-                setVerificationResult(result.length > 46 ? 'Verification failed!' : 'Verified');
+                        {"checks":["proof"],"warnings":[],"errors":["signature error: Verification equation was not satisfied"]}
+                        の場合は文字数が46を超えることを利用 */
+                setVerificationResult(
+                    result.length > 46 ? "Verification failed!" : "Verified"
+                );
             } else {
-                console.error("MetaMask is not connected or contract is not initialized.");
+                console.error(
+                    "MetaMask is not connected or contract is not initialized."
+                );
             }
         } catch (error) {
             console.error("検証エラー", error);
 
             // エラー時は検証結果をクリア
-            setVerificationResult('Verification failed!');
+            setVerificationResult("Verification failed!");
         }
     };
 
@@ -155,43 +163,45 @@ const Verification: React.FC = () => {
                     value={tokenId}
                     onChange={(e) => setTokenId(e.target.value)}
                     style={{
-                        padding: '8px',
-                        margin: '5px 0',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        boxSizing: 'border-box',
-                        color: 'black',
+                        padding: "8px",
+                        margin: "5px 0",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                        boxSizing: "border-box",
+                        color: "black",
                     }}
                 />
             </label>
 
-
             {/* 検証ボタン */}
             <button
                 style={{
-                    backgroundColor: 'green',
-                    color: 'white',
-                    padding: '10px',
-                    border: 'none',
-                    borderRadius: '5px',
-                    cursor: 'pointer',
+                    backgroundColor: "green",
+                    color: "white",
+                    padding: "10px",
+                    border: "none",
+                    borderRadius: "5px",
+                    cursor: "pointer",
                 }}
                 onClick={verify}
             >
                 Verify
             </button>
             {/* 検証結果をブラウザに表示 */}
-            {
-                verificationResult !== null && (
-                    <div>
-                        <h2>Verification Result:</h2>
-                        <p style={{ color: verificationResult === 'Verified' ? 'green' : 'red', fontSize: '30px' }}>
-                            {verificationResult}
-                        </p>
-                    </div>
-                )
-            }
-        </div >
+            {verificationResult !== null && (
+                <div>
+                    <h2>Verification Result:</h2>
+                    <p
+                        style={{
+                            color: verificationResult === "Verified" ? "green" : "red",
+                            fontSize: "30px",
+                        }}
+                    >
+                        {verificationResult}
+                    </p>
+                </div>
+            )}
+        </div>
     );
 };
 

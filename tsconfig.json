@@ -21,13 +21,20 @@
       "@/*": [
         "./*"
       ]
-    }
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "config.js"
+    "config.js",
+    ".next/types/**/*.ts",
+    "pages/404.jsx"
   ],
   "exclude": [
     "node_modules"
