@@ -125,7 +125,7 @@ const Verification: React.FC = () => {
                         color: '#0070f3'
                     }}
                 >
-                    Go to holder&apos;s page
+                    Go to verifier&apos;s page
                 </button>
             </Link>
             <p><br></br></p>
