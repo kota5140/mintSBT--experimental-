@@ -22,12 +22,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <ThemeProvider theme={theme}>
-      <Head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Play&family=Source+Sans+3&display=swap"
-          rel="stylesheet"
-        />
-      </Head>
       <Box>
         <CssBaseline />
         <Header />
