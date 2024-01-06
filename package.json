@@ -19,6 +19,7 @@
     "@spruceid/didkit-wasm": "^0.2.1",
     "@spruceid/didkit-wasm-node": "^0.2.1",
     "axios": "^1.6.5",
+    "date-fns": "^3.1.0",
     "ethers": "^6.9.2",
     "form-data": "^4.0.0",
     "fs": "^0.0.1-security",

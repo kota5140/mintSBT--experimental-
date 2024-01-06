@@ -9,6 +9,7 @@ import { useRef } from "react";
 import InputImage from "../othertsx/index";
 import { useGetImageUrl } from "../othertsx/useGetImageUrl";
 import { useGetJsonUrl } from "../othertsx/useGetJsonUrl";
+import { useGetJsonVCUrl } from "../othertsx/useGetJsonVCUrl";
 
 const IMAGE_ID = "imageId";
 const FIELD_SIZE = 210;
@@ -23,10 +24,17 @@ const IndexPage: React.FC = () => {
     const [toAddress, setToAddress] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
+    const [issuerDid, setIssuerDid] = useState<string>('');
+    const [year, setYear] = useState<string>('');
+    const [month, setMonth] = useState<string>('');
+    const [day, setDay] = useState<string>('');
+    const [details, setDetails] = useState<string>('');
+    const [holderDid, setHolderDid] = useState<string>('');
     const [mintStatus, setMintStatus] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [jsonData, setJsonData] = useState<any | null>(null);
+    const [jsonVCData, setJsonVCData] = useState<any | null>(null);
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget?.files && e.currentTarget.files[0]) {
@@ -46,6 +54,8 @@ const IndexPage: React.FC = () => {
     // state (imageFile)が更新されたら、画像URLを作成する。
     const { imageUrl } = useGetImageUrl({ file: imageFile });
     const { jsonUrl } = useGetJsonUrl({ string: jsonData });
+    const { jsonVCUrl } = useGetJsonVCUrl({ string: jsonVCData });
+
 
     useEffect(() => {
         const checkMetaMaskClient = async () => {
@@ -120,6 +130,16 @@ const IndexPage: React.FC = () => {
         });
         console.log(jsonData);
     };
+
+    const createJsonVCData = async () => {
+        // 作成するJSONファイルのデータを構築
+        setJsonVCData({
+
+        });
+        console.log(jsonVCData);
+    };
+
+    const now = new Date();
 
     return (
         <div style={{ textAlign: 'center' }}>
@@ -260,10 +280,107 @@ const IndexPage: React.FC = () => {
                             margin: '0 auto', // これを追加して中央寄せ
                         }}
                     >
-                        Cancel
+                        Cancel the image
                     </button>
-
+                    <br></br>
+                    <br></br>
+                    <input
+                        type="text"
+                        placeholder="Enter issuer's DID"
+                        value={issuerDid}
+                        onChange={(e) => setIssuerDid(e.target.value)}
+                        style={{
+                            width: '400px',
+                            padding: '8px',
+                            margin: '5px 0',
+                            borderRadius: '5px',
+                            border: '1px solid #ccc',
+                            boxSizing: 'border-box',
+                            color: 'black',
+                        }}
+                    />
+                    <br></br>
                 </>
+                <p>Issuarance Date</p>
+                <input
+                    type="text"
+                    placeholder="Year"
+                    value={year}
+                    onChange={(e) => setYear(e.target.value)}
+                    style={{
+                        width: '100px',
+                        padding: '8px',
+                        margin: '5px 0',
+                        borderRadius: '5px',
+                        border: '1px solid #ccc',
+                        boxSizing: 'border-box',
+                        color: 'black',
+                    }}
+                />
+                <input
+                    type="text"
+                    placeholder="Month"
+                    value={month}
+                    onChange={(e) => setMonth(e.target.value)}
+                    style={{
+                        width: '100px',
+                        padding: '8px',
+                        margin: '5px 0',
+                        borderRadius: '5px',
+                        border: '1px solid #ccc',
+                        boxSizing: 'border-box',
+                        color: 'black',
+                    }}
+                />
+                <input
+                    type="text"
+                    placeholder="Day"
+                    value={day}
+                    onChange={(e) => setDay(e.target.value)}
+                    style={{
+                        width: '100px',
+                        padding: '8px',
+                        margin: '5px 0',
+                        borderRadius: '5px',
+                        border: '1px solid #ccc',
+                        boxSizing: 'border-box',
+                        color: 'black',
+                    }}
+                />
+                <br></br>
+                <input
+                    type="text"
+                    placeholder="Enter recipient's DID"
+                    value={holderDid}
+                    onChange={(e) => setHolderDid(e.target.value)}
+                    style={{
+                        width: '400px',
+                        padding: '8px',
+                        margin: '5px 0',
+                        borderRadius: '5px',
+                        border: '1px solid #ccc',
+                        boxSizing: 'border-box',
+                        color: 'black',
+                    }}
+                />
+                <br></br>
+                <textarea
+                    placeholder="More details (anything)"
+                    value={details}
+                    onChange={(e) => setDetails(e.target.value)}
+                    style={{
+                        width: '400px',
+                        height: '100px',  // 適切な高さに調整してください
+                        padding: '8px',
+                        margin: '5px 0',
+                        borderRadius: '5px',
+                        border: '1px solid #ccc',
+                        boxSizing: 'border-box',
+                        color: 'black',
+                        resize: 'vertical',  // この行を追加すると縦方向にのみリサイズができます
+                    }}
+                />
+                <br></br>
                 <button
                     onClick={onClickMint}
                     disabled={!contract || !toAddress || !name}
@@ -282,7 +399,7 @@ const IndexPage: React.FC = () => {
                 </button>
                 <p style={{ fontSize: '16px', marginTop: '10px' }}>{mintStatus}</p>
             </div>
-        </div>
+        </div >
     );
 };
 
