@@ -12,7 +12,7 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import Login from "./login_metamask";
+import Navbar from "./metamask";
 
 const pages = ["Usage", "Blog", "Q&A"];
 const settings = ["Account", "Settings", "Disconnect", "Help"];
@@ -131,11 +131,8 @@ function Header() {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Button color="inherit" variant="outlined" onClick={Login}>
-              Connect Metamask
-            
-            </Button>
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>
+            <Navbar />
           </Box>
         </Toolbar>
       </Container>

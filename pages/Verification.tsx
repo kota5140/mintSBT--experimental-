@@ -18,13 +18,20 @@ const Verification: React.FC = () => {
     try {
       // Check if MetaMask is present
       if (window.ethereum) {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        if (accounts.length > 0) {
-          const connectedAccount = accounts[0];
-          setConnectedAccount(connectedAccount);
-          setMetaMaskConnected(true);
+        try {
+          const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+
+          if (Array.isArray(accounts) && accounts.length > 0) {
+            const connectedAccount = accounts[0];
+            setConnectedAccount(connectedAccount);
+            setMetaMaskConnected(true);
+          } else {
+            console.error("Invalid or empty accounts array:", accounts);
+          }
+        } catch (error) {
+          console.error("Error requesting accounts:", error);
         }
       } else {
         // Ask for user confirmation before redirecting to MetaMask Mobile installation page
@@ -92,8 +99,8 @@ const Verification: React.FC = () => {
         console.log(result.length);
         // 検証結果をstateにセット
         /* resultの結果が
-                {"checks":["proof"],"warnings":[],"errors":["signature error: Verification equation was not satisfied"]}
-                の場合は文字数が46を超えることを利用 */
+                        {"checks":["proof"],"warnings":[],"errors":["signature error: Verification equation was not satisfied"]}
+                        の場合は文字数が46を超えることを利用 */
         setVerificationResult(
           result.length > 46 ? "Verification failed!" : "Verified"
         );
