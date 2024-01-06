@@ -1,14 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import Popover from "@mui/material/Popover";
 import Button from "@mui/material/Button";
 import { useSDK, MetaMaskProvider } from "@metamask/sdk-react";
 import { formatAddress } from "../lib/utils";
+import { useRouter } from "next/router";
 
 export const ConnectWalletButton = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const router = useRouter();
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -27,15 +30,24 @@ export const ConnectWalletButton = () => {
     try {
       await sdk?.connect();
     } catch (err) {
-      console.warn("No accounts found", err);
+      console.warn("Connection failed", err);
+      alert("Connection failed");
+      router.reload();
     }
   };
 
   const disconnect = () => {
     if (sdk) {
       sdk.terminate();
+      router.reload();
     }
   };
+
+  useEffect(() => {
+    if (connected) {
+      router.push("/mypage");
+    }
+  }, [connected]);
 
   return (
     <div style={{ position: "relative" }}>
@@ -63,12 +75,17 @@ export const ConnectWalletButton = () => {
               onClick={disconnect}
               variant="contained"
             >
-              Disconnect
+              <Link
+                href="/index"
+                className="block w-full pl-2 pr-4 py-2 text-left text-[#F05252] hover:bg-gray-200"
+              >
+                Disconnect
+              </Link>
             </Button>
           </Popover>
         </>
       ) : (
-        <Button disabled={connecting} onClick={connect} variant="containpued">
+        <Button disabled={connecting} onClick={connect} variant="contained">
           Connect Wallet
         </Button>
       )}

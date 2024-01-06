@@ -13,7 +13,8 @@ import {
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { teal } from "@mui/material/colors";
-export const Login = () => {
+
+const Login = () => {
   return (
     <Grid>
       <Paper
@@ -63,3 +64,5 @@ export const Login = () => {
     </Grid>
   );
 };
+
+export { Login };
