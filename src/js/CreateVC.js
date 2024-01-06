@@ -1,9 +1,33 @@
-const DIDKit = require("../../didkit_vc/didkit-wasm-node/didkit_wasm");
+const DIDKit = require("@spruceid/didkit-wasm-node/didkit_wasm");
+
 const fs = require("fs");
 // cryptoモジュールはVCの id フィールドに一意な値を生成するために使用されます。
 const crypto = require("crypto");
 
 async function main() {
+
+  // ここでは"issuer_key.jwk" ファイルから秘密鍵（署名に使うやつ）を読み込み、文字列に変換します。
+  const issuerKey = fs.readFileSync("issuer_key.jwk").toString();
+  // 読み込んだ秘密鍵から DID（分散識別子）を生成します。これは VC の issuer フィールドに設定されます。
+  // 注意！！
+  // issuerKey には JSON Web Key (JWK) 形式の秘密鍵が含まれており、その中には公開鍵や鍵の種類などが記述されている.
+  // DIDKit.keyToDID はこの情報を使って DID を生成し、その DID を issuerDid に格納しています。
+  const issuerDid = DIDKit.keyToDID("key", issuerKey);
+
+  const holderKey = fs.readFileSync("holder_key.jwk").toString();
+  const holderDid = DIDKit.keyToDID("key", holderKey);
+  const unsignedVc = {
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://www.w3.org/2018/credentials/examples/v1",
+    ],
+    id: `urn:uuid:${crypto.randomUUID()}`,
+    type: ["VerifiableCredential"],
+    issuer: issuerDid,
+    issuanceDate: "2024-01-01T00:00:00Z",
+    credentialSubject: {
+      id: holderDid,
+
     // ここでは"issuer_key.jwk" ファイルから秘密鍵（署名に使うやつ）を読み込み、文字列に変換します。
     const issuerKey = fs.readFileSync("issuer_key.jwk").toString();
     // 読み込んだ秘密鍵から DID（分散識別子）を生成します。これは VC の issuer フィールドに設定されます。
