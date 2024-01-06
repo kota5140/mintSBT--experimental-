@@ -12,8 +12,8 @@ import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Navbar from "./metamask";
 
-const pages = ["Usage", "Blog", "Q&A"];
-const settings = ["Account", "Settings", "Disconnect", "Help"];
+const pages = ["Term of Use", "Blog", "Q&A"];
+const settings = ["Accoutn", "Settings", "Disconnect", "Help"];
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -26,7 +26,6 @@ function Header() {
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-
   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -126,7 +125,7 @@ function Header() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 1, color: "white", display: "block" }}
+                sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
               </Button>
