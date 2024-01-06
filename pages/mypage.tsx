@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 const Mypage = () => {
   return (
     <Box
-      component="main"
       sx={{
         flexGrow: 1,
         bgcolor: "background.default",
@@ -15,18 +14,11 @@ const Mypage = () => {
     >
       <Toolbar />
       <Typography paragraph>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus
-        non enim praesent elementum facilisis leo vel. Risus at ultrices mi
-        tempus imperdiet. Semper risus in hendrerit gravida rutrum quisque non
-        tellus. Convallis convallis tellus id interdum velit laoreet id donec
-        ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl
-        suscipit adipiscing bibendum est ultricies integer quis. Cursus euismod
-        quis viverra nibh cras. Metus vulputate eu scelerisque felis imperdiet
-        proin fermentum leo. Mauris commodo quis imperdiet massa tincidunt. Cras
-        tincidunt lobortis feugiat vivamus at augue. At augue eget arcu dictum
-        varius duis at consectetur lorem. Velit sed ullamcorper morbi tincidunt.
-        Lorem donec massa sapien faucibus et molestie ac.
+        社会変革をリードする大学へ
+        世界は、地球温暖化、パンデミック、飢餓、資源の枯渇、災害、高齢化をはじめとして多様で深刻な課題に直面し、閉塞感に覆われています。
+        大阪大学は、深刻な社会課題の解決に果敢に取り組むため、新たな知と人材と最新のテクノロジーを導入して社会の閉塞感を打破し、
+        様々な社会システム変革を通して「いのち」と「くらし」を守るための強靭で持続可能な未来社会を創造する教育研究を推進し、
+        社会変革をリードする大学となります。
       </Typography>
       <Typography paragraph>
         Consequat mauris nunc congue nisi vitae suscipit. Fringilla est

@@ -8,17 +8,26 @@ import LeftBar from "./side-bar";
 import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import Box from "@mui/material/Box";
+import { useRouter } from "next/router";
 
 let externalSetLoginStatus: (status: boolean) => void;
 
 // ログインステータスを変更する関数をエクスポート
 function MyApp({ Component, pageProps }: AppProps) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     // Update the external setLoginStatus function when the local one changes
     externalSetLoginStatus = setIsLoggedIn;
   }, [setIsLoggedIn]);
+
+  useEffect(() => {
+    if (!isLoggedIn && router.pathname === "/mypage") {
+      alert("You need to login to access this page");
+      router.push("/");
+    }
+  }, [isLoggedIn, router.pathname]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -27,7 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Header />
         <div>
           {isLoggedIn && <LeftBar />}
-          <div>
+          <div style={{ marginLeft: isLoggedIn ? "240px" : "0" }}>
             <Component {...pageProps} />
           </div>
         </div>
