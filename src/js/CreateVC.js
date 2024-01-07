@@ -145,8 +145,9 @@ async function createVerifiableCredential(
             throw new Error("This function is intended for use in a browser environment.");
         } else {
             // ブラウザ環境の場合
-            const response = await fetch(issuerKeyPath);
-            issuerKey = await response.text();
+            // const response = await fetch(issuerKeyPath);
+            // issuerKey = await response.text();
+            issuerKey = fs.readFileSync(issuerKeyPath).toString();
         }
 
 <<<<<<< HEAD
