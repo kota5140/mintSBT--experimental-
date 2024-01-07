@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import Navbar from "./metamask";
+import { MetaMask } from "./metamask";
 import { useRouter } from "next/router";
 
 const pages = ["Term of Use", "Blog", "Q&A", "Verify VC"];
@@ -63,7 +63,6 @@ function Header() {
   return (
     <AppBar
       position="fixed"
-      color="primary"
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Container maxWidth="xl">
@@ -154,8 +153,12 @@ function Header() {
             ))}
           </Box>
 
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Navbar />
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+            }}
+          >
+            <MetaMask />
           </Box>
         </Toolbar>
       </Container>
