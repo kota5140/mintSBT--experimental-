@@ -13,8 +13,63 @@ const Verification: React.FC = () => {
     const [metaMaskConnected, setMetaMaskConnected] = useState(false);
     const [connectedAccount, setConnectedAccount] = useState(""); // ここで connectedAccount を useState で宣言
 
+<<<<<<< HEAD
+  let contract: ethers.Contract;
+  const connectMetaMask = async () => {
+    try {
+      // Check if MetaMask is present
+      if (window.ethereum) {
+        try {
+          const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+
+          if (Array.isArray(accounts) && accounts.length > 0) {
+            const connectedAccount = accounts[0];
+            setConnectedAccount(connectedAccount);
+            setMetaMaskConnected(true);
+          } else {
+            console.error("Invalid or empty accounts array:", accounts);
+          }
+        } catch (error) {
+          console.error("Error requesting accounts:", error);
+        }
+      } else {
+        // Ask for user confirmation before redirecting to MetaMask Mobile installation page
+        const userConfirmed = window.confirm("Open in 'MetaMask' app?");
+
+        if (userConfirmed) {
+          /* 未実装 */
+          window.confirm(
+            "We currently do not provide support for mobile phones."
+          );
+        }
+      }
+    } catch (error) {
+      console.error("MetaMask connection error", error);
+      setMetaMaskConnected(false);
+    }
+  };
+
+  const verify = async () => {
+    try {
+      console.log("検証スタート");
+      // contract
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const signer = await provider.getSigner();
+      /* Goerliネットワーク上にあるコントラクトを使えるようにしまっせということ */
+      contract = new ethers.Contract(
+        contractConfig.address,
+        contractConfig.abi,
+        signer
+      );
+      console.log(metaMaskConnected);
+      console.log(contract);
+      if (metaMaskConnected && contract) {
+=======
     let contract: ethers.Contract;
     const connectMetaMask = async () => {
+>>>>>>> 2ed7a144c03dd58a99029d0fad71cef59a51a672
         try {
             // Check if MetaMask is present
             if (window.ethereum) {
@@ -80,6 +135,24 @@ const Verification: React.FC = () => {
                 // VCデータをJSONファイルに変換
                 const vcJsonString = JSON.stringify(vcMetadata);
 
+<<<<<<< HEAD
+        console.log(result);
+        console.log(result.length);
+        // 検証結果をstateにセット
+        /* resultの結果が
+                        {"checks":["proof"],"warnings":[],"errors":["signature error: Verification equation was not satisfied"]}
+                        の場合は文字数が46を超えることを利用 */
+        setVerificationResult(
+          result.length > 46 ? "Verification failed!" : "Verified"
+        );
+      } else {
+        console.error(
+          "MetaMask is not connected or contract is not initialized."
+        );
+      }
+    } catch (error) {
+      console.error("検証エラー", error);
+=======
                 // VCの検証
                 const didkit = await import("@spruceid/didkit-wasm");
                 const proofOptions = {};
@@ -87,6 +160,7 @@ const Verification: React.FC = () => {
                     vcJsonString,
                     JSON.stringify(proofOptions)
                 );
+>>>>>>> 2ed7a144c03dd58a99029d0fad71cef59a51a672
 
                 console.log(result);
                 console.log(result.length);

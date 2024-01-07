@@ -1,12 +1,13 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.17;
 
-import "node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
-import "node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
-import "node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
-import "node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
-import "node_modules/@openzeppelin/contracts/access/Ownable.sol";
-import {Interface} from "src/interfaces/interface.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+import "../node_modules/@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
+import "../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "../src/interfaces/interface.sol";
+
 
 contract SSICerts is
     ERC721,

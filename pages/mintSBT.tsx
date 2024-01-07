@@ -134,6 +134,30 @@ const IndexPage: React.FC = () => {
         console.log(jsonData);
     };
 
+    const createJsonVCData = async () => {
+        // try {
+        //     // 作成するJSONファイルのデータを構築
+        //     const vcData = await createVerifiableCredential("issuer_key.jwk", issuerDid, holderDid, name, issuaranceDate, details);
+        //     setJsonVCData(vcData);
+        // } catch (error) {
+        //     console.error(error);
+        //     // Handle error if createVerifiableCredential fails
+        // }
+    };
+
+    const createIssuanceDate = () => {
+        // Year, Month, Day の各項目から取得
+        const yearValue = parseInt(year, 10) || 2024;
+        const monthValue = parseInt(month, 10) || 1;
+        const dayValue = parseInt(day, 10) || 1;
+
+        // ISO 8601 形式の文字列に変換
+        const isoDateString = new Date(yearValue, monthValue - 1, dayValue).toISOString();
+
+        // state の更新
+        setIssuaranceDate(isoDateString);
+    };
+
     return (
         <div style={{ textAlign: 'center' }}>
             <h1 style={{ fontSize: '30px', margin: '20px 0' }}>SSICerts</h1>

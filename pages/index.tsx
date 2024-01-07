@@ -1,21 +1,22 @@
 import React from "react";
-import { Login } from "./login";
-import Verification from "./Verification";
-import Header from "./Header";
+import { Stack } from "@mui/material";
+import top from "../public/top-page.jpg";
+import Divider from "@mui/material/Divider";
+import "@mui/material"; // Import MUI CSS
+import Image from "next/image";
 
-// Define the Home component
 const Home = () => {
   return (
-    <>
-      <Header />
-      <main>
-        {/* Render the Verification component */}
-        <Login />
-        {/* Other content can go here */}
-      </main>
-    </>
+    <div style={{ height: "100vh", flex: 5 }}>
+      {" "}
+      <Image
+        fill={true}
+        src={top.src}
+        alt="Top Page"
+        style={{ maxHeight: "100%", width: "100%" }}
+      />
+    </div>
   );
 };
-//<Verification />
-// Export the Home component
+
 export default Home;

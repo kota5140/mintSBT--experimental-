@@ -34,7 +34,7 @@
     "**/*.tsx",
     "config.js",
     ".next/types/**/*.ts",
-    "pages/404.jsx"
+    "pages/not-found.jsx"
   ],
   "exclude": [
     "node_modules"
