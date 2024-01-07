@@ -14,7 +14,6 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import TokenIcon from "@mui/icons-material/MonetizationOn";
-import Link from "next/link";
 import { useRouter } from "next/router";
 
 const drawerWidth = 240;
@@ -35,8 +34,11 @@ function LeftBar() {
 
   const handleListMenuItemClick = (text: string) => {
     switch (text) {
+      case "Home":
+        router.push("/mypage");
+        break;
       case "Verify VC":
-        router.push("/mypage/verifyVC");
+        router.push("/verifyVC");
         break;
       case "Issue VC":
         router.push("/mypage/issueVC");
@@ -52,10 +54,10 @@ function LeftBar() {
   const handleListSettingItemClick = (text: string) => {
     switch (text) {
       case "Help Center":
-        router.push("/mypage/helpcenter");
+        //router.push("/mypage/helpcenter");
         break;
       case "Settings":
-        router.push("/mypage/settings");
+        //router.push("/mypage/settings");
         break;
       default:
         break;
