@@ -105,8 +105,6 @@ const IndexPage: React.FC = () => {
 
     const onClickMint = async () => {
         try {
-            createIssuanceDate();
-            createJsonVCData();
             createJsonData();
             if (!toAddress || !jsonUrl) {
                 // Handle validation errors
