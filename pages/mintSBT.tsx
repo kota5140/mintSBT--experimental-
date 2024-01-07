@@ -9,6 +9,7 @@ import { useRef } from "react";
 import InputImage from "../othertsx/index";
 import { useGetImageUrl } from "../othertsx/useGetImageUrl";
 import { useGetJsonUrl } from "../othertsx/useGetJsonUrl";
+import createVerifiableCredential from "../src/js/CreateVC";
 
 const IMAGE_ID = "imageId";
 const FIELD_SIZE = 210;
