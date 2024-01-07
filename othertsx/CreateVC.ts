@@ -1,16 +1,16 @@
-const DIDKit = require("../../didkit_vc/didkit-wasm-node/didkit_wasm");
+const DIDKit = require("../didkit_vc/didkit-wasm-node/didkit_wasm");
 const crypto = require("crypto");
 
-async function createVerifiableCredential(
-    issuerKeyPath,
-    issuerDid,
-    holderDid,
-    name,
-    issuanceDate,
-    details
-) {
+export async function createVerifiableCredential(
+    issuerKeyPath: string,
+    issuerDid: string,
+    holderDid: string,
+    name: string,
+    issuanceDate: string,
+    details: string
+): Promise<string> {
     try {
-        let issuerKey;
+        let issuerKey: string;
 
         // Node.js 環境かどうかの判定
         if (typeof window === 'undefined') {
@@ -50,5 +50,3 @@ async function createVerifiableCredential(
         throw new Error(`Error creating Verifiable Credential: ${error}`);
     }
 }
-
-module.exports = createVerifiableCredential;

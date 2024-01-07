@@ -10,6 +10,8 @@ import InputImage from "../othertsx/index";
 import { useGetImageUrl } from "../othertsx/useGetImageUrl";
 import { useGetJsonUrl } from "../othertsx/useGetJsonUrl";
 import { useGetJsonVCUrl } from "../othertsx/useGetJsonVCUrl";
+import createVerifiableCredential from "../src/js/CreateVC";
+import { create } from '@mui/material/styles/createTransitions';
 
 const IMAGE_ID = "imageId";
 const FIELD_SIZE = 210;
@@ -35,6 +37,8 @@ const IndexPage: React.FC = () => {
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [jsonData, setJsonData] = useState<any | null>(null);
     const [jsonVCData, setJsonVCData] = useState<any | null>(null);
+    const [issuerKeyPath, setIssuerKeyPath] = useState<string>('');
+    const [issuaranceDate, setIssuaranceDate] = useState<string>('');
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget?.files && e.currentTarget.files[0]) {
@@ -102,6 +106,8 @@ const IndexPage: React.FC = () => {
 
     const onClickMint = async () => {
         try {
+            createIssuanceDate();
+            createJsonVCData();
             createJsonData();
             if (!toAddress || !jsonUrl) {
                 // Handle validation errors
@@ -126,20 +132,29 @@ const IndexPage: React.FC = () => {
             description,
             image: imageUrl, // ここは実際の画像URIに変更する必要があります
             attributes: [{ value: 1 }],
-            verifiableCredentials: [""],
+            verifiableCredentials: [jsonVCUrl],
         });
         console.log(jsonData);
     };
 
     const createJsonVCData = async () => {
         // 作成するJSONファイルのデータを構築
-        setJsonVCData({
-
-        });
+        setJsonVCData(createVerifiableCredential(issuerKeyPath, issuerDid, holderDid, name, issuaranceDate, details));
         console.log(jsonVCData);
     };
 
-    const now = new Date();
+    const createIssuanceDate = () => {
+        // Year, Month, Day の各項目から取得
+        const yearValue = parseInt(year, 10) || 2024;
+        const monthValue = parseInt(month, 10) || 1;
+        const dayValue = parseInt(day, 10) || 1;
+
+        // ISO 8601 形式の文字列に変換
+        const isoDateString = new Date(yearValue, monthValue - 1, dayValue).toISOString();
+
+        // state の更新
+        setIssuaranceDate(isoDateString);
+    };
 
     return (
         <div style={{ textAlign: 'center' }}>
