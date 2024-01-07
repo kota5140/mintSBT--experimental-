@@ -7,8 +7,7 @@ import Button from "@mui/material/Button";
 import { useSDK, MetaMaskProvider } from "@metamask/sdk-react";
 import { formatAddress } from "../lib/utils";
 import { useRouter } from "next/router";
-import contractConfig from "../config"; //アドレスによって，遷移するページの変更
-import { setLoginStatus } from "./_app";
+import { setLoginStatus } from "../pages/_app";
 
 export const ConnectWalletButton = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -50,7 +49,7 @@ export const ConnectWalletButton = () => {
   useEffect(() => {
     if (connected) {
       setLoginStatus(true);
-      router.push("/mypage");
+      router.push("/mypage"); //mypage/indexに遷移
     }
   }, [connected]);
 

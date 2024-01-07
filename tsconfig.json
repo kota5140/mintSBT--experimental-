@@ -28,16 +28,7 @@
     "**/*.tsx",
     "config.js",
     ".next/types/**/*.ts",
-<<<<<<< HEAD
     "pages/not-found.jsx"
   ],
   "exclude": ["node_modules"]
 }
-=======
-    "pages/404.jsx"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
-}
->>>>>>> 2ed7a144c03dd58a99029d0fad71cef59a51a672
