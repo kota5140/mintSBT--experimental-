@@ -11,7 +11,6 @@ import { useGetImageUrl } from "../othertsx/useGetImageUrl";
 import { useGetJsonUrl } from "../othertsx/useGetJsonUrl";
 import { useGetJsonVCUrl } from "../othertsx/useGetJsonVCUrl";
 import createVerifiableCredential from "../src/js/CreateVC";
-import { create } from '@mui/material/styles/createTransitions';
 
 const IMAGE_ID = "imageId";
 const FIELD_SIZE = 210;
