@@ -62,6 +62,7 @@ const DIDKit = require("../../didkit_vc/didkit-wasm-node/didkit_wasm");
 const crypto = require("crypto");
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 async function main() {
 <<<<<<< HEAD
   // ここでは"issuer_key.jwk" ファイルから秘密鍵（署名に使うやつ）を読み込み、文字列に変換します。
@@ -121,6 +122,8 @@ async function main() {
     // DIDKit.keyToDID はこの情報を使って DID を生成し、その DID を issuerDid に格納しています。
     const issuerDid = DIDKit.keyToDID("key", issuerKey)
 =======
+=======
+>>>>>>> 5db99e5 (a)
 async function createVerifiableCredential(
     issuerKeyPath,
     issuerDid,
@@ -131,7 +134,10 @@ async function createVerifiableCredential(
 ) {
     try {
         let issuerKey;
+<<<<<<< HEAD
 >>>>>>> dfc00de (a)
+=======
+>>>>>>> 5db99e5 (a)
 
         // Node.js 環境かどうかの判定
         if (typeof window === 'undefined') {
@@ -143,6 +149,7 @@ async function createVerifiableCredential(
             issuerKey = await response.text();
         }
 
+<<<<<<< HEAD
 <<<<<<< HEAD
     // 署名された VC を JSON ファイルとして保存
     fs.writeFileSync("signed-vc4.json", signedVc)
@@ -192,3 +199,35 @@ main()
 
 module.exports = createVerifiableCredential;
 >>>>>>> dfc00de (a)
+=======
+        const unsignedVc = {
+            "@context": [
+                "https://www.w3.org/2018/credentials/v1",
+                "https://www.w3.org/2018/credentials/examples/v1",
+            ],
+            "id": `urn:uuid:${crypto.randomUUID()}`,
+            "type": ["VerifiableCredential"],
+            "issuer": issuerDid,
+            "issuanceDate": issuanceDate,
+            "credentialSubject": {
+                "id": holderDid,
+                "name": name,
+                "details": details,
+            },
+        };
+
+        const proofOptions = {};
+        const signedVc = await DIDKit.issueCredential(
+            JSON.stringify(unsignedVc),
+            JSON.stringify(proofOptions),
+            issuerKey
+        );
+
+        return signedVc;
+    } catch (error) {
+        throw new Error(`Error creating Verifiable Credential: ${error}`);
+    }
+}
+
+module.exports = createVerifiableCredential;
+>>>>>>> 5db99e5 (a)
