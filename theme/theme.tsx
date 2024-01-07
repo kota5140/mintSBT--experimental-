@@ -14,7 +14,7 @@ const theme = createTheme({
       default: deepPurple[50],
     },
     secondary: {
-      main: deepPurple[700],
+      main: deepPurple[500],
     },
   },
 });

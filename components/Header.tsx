@@ -10,10 +10,11 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import Navbar from "./metamask";
+import { MetaMask } from "./metamask";
+import { useRouter } from "next/router";
 
-const pages = ["Term of Use", "Blog", "Q&A"];
-const settings = ["Accoutn", "Settings", "Disconnect", "Help"];
+const pages = ["Term of Use", "Blog", "Q&A", "Verify VC"];
+const settings = ["Account", "Settings", "Disconnect", "Help"]; // Corrected typo in "Account"
 
 function Header() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
@@ -38,10 +39,30 @@ function Header() {
     setAnchorElUser(null);
   };
 
+  const router = useRouter();
+
+  const handleListMenuClick = (text: string) => {
+    switch (text) {
+      case "Term of Use":
+        // router.push("/termofuse");
+        break;
+      case "Blog":
+        // router.push("/blog");
+        break;
+      case "Q&A":
+        // router.push("/q&a");
+        break;
+      case "Verify VC":
+        router.push("/verifyVC");
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <AppBar
       position="fixed"
-      color="primary"
       sx={{ zIndex: (theme) => theme.zIndex.drawer + 1 }}
     >
       <Container maxWidth="xl">
@@ -95,7 +116,7 @@ function Header() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={() => handleListMenuClick(page)}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
@@ -124,7 +145,7 @@ function Header() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={() => handleListMenuClick(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page}
@@ -132,12 +153,17 @@ function Header() {
             ))}
           </Box>
 
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <Navbar />
+          <Box
+            sx={{
+              display: { xs: "none", md: "flex" },
+            }}
+          >
+            <MetaMask />
           </Box>
         </Toolbar>
       </Container>
     </AppBar>
   );
 }
+
 export default Header;
