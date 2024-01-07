@@ -1,12 +1,10 @@
-import "../styles/globals.css";
 import type { AppProps } from "next/app";
-import Head from "next/head";
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import theme from "../theme/theme";
-import LeftBar from "./side-bar";
+import LeftBar from "../components/side-bar";
 import React, { useState, useEffect } from "react";
-import Header from "./Header";
+import Header from "../components/Header";
 import Box from "@mui/material/Box";
 import { useRouter } from "next/router";
 
@@ -24,7 +22,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     if (!isLoggedIn && router.pathname != "/") {
-      alert("You need to login to access this page");
       router.push("/");
     }
   }, [isLoggedIn, router.pathname]);

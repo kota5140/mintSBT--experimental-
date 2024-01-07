@@ -14,10 +14,14 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import TokenIcon from "@mui/icons-material/MonetizationOn";
+import Link from "next/link";
+import { useRouter } from "next/router";
 
 const drawerWidth = 240;
 
 function LeftBar() {
+  const router = useRouter();
+
   const menuItems = [
     { text: "Home", icon: <HomeIcon /> },
     { text: "Issue VC", icon: <HistoryEduIcon /> },
@@ -28,6 +32,35 @@ function LeftBar() {
     { text: "Help Center", icon: <HelpCenterIcon /> },
     { text: "Settings", icon: <SettingsIcon /> },
   ];
+
+  const handleListMenuItemClick = (text: string) => {
+    switch (text) {
+      case "Verify VC":
+        router.push("/mypage/verifyVC");
+        break;
+      case "Issue VC":
+        router.push("/mypage/issueVC");
+        break;
+      case "Manage SBT":
+        router.push("/mypage/manage");
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleListSettingItemClick = (text: string) => {
+    switch (text) {
+      case "Help Center":
+        router.push("/mypage/helpcenter");
+        break;
+      case "Settings":
+        router.push("/mypage/settings");
+        break;
+      default:
+        break;
+    }
+  };
 
   return (
     <Box>
@@ -48,7 +81,9 @@ function LeftBar() {
         <List>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton>
+              <ListItemButton
+                onClick={() => handleListMenuItemClick(item.text)}
+              >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>
@@ -59,7 +94,9 @@ function LeftBar() {
         <List>
           {settingItems.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton>
+              <ListItemButton
+                onClick={() => handleListSettingItemClick(item.text)}
+              >
                 <ListItemIcon>{item.icon}</ListItemIcon>
                 <ListItemText primary={item.text} />
               </ListItemButton>

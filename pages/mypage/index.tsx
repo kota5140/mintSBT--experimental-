@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
-const Mypage = () => {
+const Home = () => {
   return (
     <Box
       sx={{
@@ -38,4 +38,4 @@ const Mypage = () => {
   );
 };
 
-export default Mypage;
+export default Home;
