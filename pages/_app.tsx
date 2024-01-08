@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [setIsLoggedIn]);
 
   useEffect(() => {
-    if (!isLoggedIn && router.pathname != "/") {
+    if (!isLoggedIn && router.pathname != "/verifier") {
       router.push("/");
     }
   }, [isLoggedIn, router.pathname]);
