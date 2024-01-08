@@ -14,11 +14,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import TokenIcon from "@mui/icons-material/MonetizationOn";
-<<<<<<< HEAD:pages/side-bar.tsx
 import Link from 'next/link';
-=======
-import { useRouter } from "next/router";
->>>>>>> 3c625739939e8e2d72874785b7cf8e1ed3a2ef3e:components/side-bar.tsx
+import { useRouter } from 'next/router';
 
 const drawerWidth = 240;
 
@@ -28,7 +25,7 @@ function LeftBar() {
   const menuItems = [
     { text: "Home", icon: <HomeIcon /> },
     { text: "Issue VC", icon: <HistoryEduIcon />, path: '/mintSBT' },
-    { text: "Verify VC", icon: <PersonSearchIcon />, path: '/Verification' },
+    { text: "Verify VC", icon: <PersonSearchIcon />, path: '/verifyVC' },
     { text: "Manage SBT", icon: <TokenIcon /> },
   ];
   const settingItems = [
@@ -87,21 +84,12 @@ function LeftBar() {
         <List>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
-<<<<<<< HEAD:pages/side-bar.tsx
               <Link href={`${item.path}`} passHref>
                 <ListItemButton component="a">
                   <ListItemIcon>{item.icon}</ListItemIcon>
                   <ListItemText primary={item.text} />
                 </ListItemButton>
               </Link>
-=======
-              <ListItemButton
-                onClick={() => handleListMenuItemClick(item.text)}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
->>>>>>> 3c625739939e8e2d72874785b7cf8e1ed3a2ef3e:components/side-bar.tsx
             </ListItem>
           ))}
         </List>

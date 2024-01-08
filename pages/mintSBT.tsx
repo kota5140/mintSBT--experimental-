@@ -295,6 +295,7 @@
 
 // export default IndexPage;
 // pages/mintSBT.tsx
+
 import { useEffect, useState } from "react";
 import React, { InputHTMLAttributes, forwardRef } from "react";
 import { ethers } from "ethers";

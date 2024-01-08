@@ -36,12 +36,7 @@
     ".next/types/**/*.ts",
     "pages/not-found.jsx"
   ],
-<<<<<<< HEAD
   "exclude": [
     "node_modules"
   ]
 }
-=======
-  "exclude": ["node_modules"]
-}
->>>>>>> 3c625739939e8e2d72874785b7cf8e1ed3a2ef3e
