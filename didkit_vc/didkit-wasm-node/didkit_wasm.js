@@ -978,10 +978,37 @@ module.exports.__wbindgen_closure_wrapper11899 = function (arg0, arg1, arg2) {
     return addHeapObject(ret);
 };
 
-const path = require('path').join(__dirname, 'didkit_wasm_bg.wasm');
-const bytes = require('fs').readFileSync(path);
+// const path = require('path').join(__dirname, 'didkit_wasm_bg.wasm');
+// const bytes = require('fs').readFileSync(path);
 
-const wasmModule = new WebAssembly.Module(bytes);
-const wasmInstance = new WebAssembly.Instance(wasmModule, imports);
-wasm = wasmInstance.exports;
-module.exports.__wasm = wasm;
+// const wasmModule = new WebAssembly.Module(bytes);
+// const wasmInstance = new WebAssembly.Instance(wasmModule, imports);
+// wasm = wasmInstance.exports;
+// module.exports.__wasm = wasm;
+const path = '/didkit_wasm_bg.wasm';  // public フォルダ内のパス
+
+// ブラウザ環境かどうかをチェック
+if (typeof window === 'undefined') {
+    // Node.js 環境の場合
+    const fs = require('fs');
+    const fullPath = require('path').join(__dirname, 'didkit_wasm_bg.wasm');
+    const bytes = fs.readFileSync(fullPath);
+    initializeWasm(bytes);
+} else {
+    // ブラウザ環境の場合
+    fetchWasm(path);
+}
+
+async function fetchWasm(path) {
+    const response = await fetch(path);
+    const buffer = await response.arrayBuffer();
+    const bytes = new Uint8Array(buffer);
+    initializeWasm(bytes);
+}
+
+function initializeWasm(bytes) {
+    const wasmModule = new WebAssembly.Module(bytes);
+    const wasmInstance = new WebAssembly.Instance(wasmModule, imports);
+    wasm = wasmInstance.exports;
+    module.exports.__wasm = wasm;
+}

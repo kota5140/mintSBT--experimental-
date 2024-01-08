@@ -14,7 +14,8 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import HistoryEduIcon from "@mui/icons-material/HistoryEdu";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import TokenIcon from "@mui/icons-material/MonetizationOn";
-import { useRouter } from "next/router";
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 const drawerWidth = 240;
 
@@ -23,8 +24,8 @@ function LeftBar() {
 
   const menuItems = [
     { text: "Home", icon: <HomeIcon /> },
-    { text: "Issue VC", icon: <HistoryEduIcon /> },
-    { text: "Verify VC", icon: <PersonSearchIcon /> },
+    { text: "Issue VC", icon: <HistoryEduIcon />, path: '/mintSBT' },
+    { text: "Verify VC", icon: <PersonSearchIcon />, path: '/verifyVC' },
     { text: "Manage SBT", icon: <TokenIcon /> },
   ];
   const settingItems = [
@@ -83,12 +84,12 @@ function LeftBar() {
         <List>
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
-              <ListItemButton
-                onClick={() => handleListMenuItemClick(item.text)}
-              >
-                <ListItemIcon>{item.icon}</ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItemButton>
+              <Link href={`${item.path}`} passHref>
+                <ListItemButton component="a">
+                  <ListItemIcon>{item.icon}</ListItemIcon>
+                  <ListItemText primary={item.text} />
+                </ListItemButton>
+              </Link>
             </ListItem>
           ))}
         </List>

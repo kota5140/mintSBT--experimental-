@@ -1,30 +1,30 @@
 import { useState, useEffect } from 'react';
 import pinJsonToIPFS from '../src/js/pinJsonToIPFS'; // Add this import
 
-type UseGetJsonUrlProps = {
+type UseGetJsonVCUrlProps = {
     string: string | null; // Add jsonData to the props
 };
 
-export const useGetJsonUrl = ({ string }: UseGetJsonUrlProps) => {
-    const [jsonUrl, setJsonUrl] = useState<string | null>(null); // Add jsonUrl state
+export const useGetJsonVCUrl = ({ string }: UseGetJsonVCUrlProps) => {
+    const [jsonVCUrl, setJsonVCUrl] = useState<string | null>(null); // Add jsonUrl state
     useEffect(() => {
         const pinDataToIPFS = async () => {
             if (string) {
                 try {
                     // Pin the JSON data to IPFS and get the link
                     const jsonIpfsLink = await pinJsonToIPFS(string);
-                    setJsonUrl('https://ipfs.io/ipfs/' + jsonIpfsLink);
+                    setJsonVCUrl('https://ipfs.io/ipfs/' + jsonIpfsLink);
                 } catch (error) {
                     console.error('Error pinning JSON data to IPFS:', error);
                 }
             } else {
-                setJsonUrl(null);
+                setJsonVCUrl(null);
             }
         };
 
         pinDataToIPFS();
     }, [string]);
-    //console.log(jsonUrl);
+    //console.log(jsonVCUrl);
 
-    return { jsonUrl };
+    return { jsonVCUrl };
 };

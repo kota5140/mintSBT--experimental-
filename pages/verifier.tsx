@@ -49,41 +49,8 @@ const Verification: React.FC = () => {
         VC Verification for verifiers
       </h1>
       <p style={{ fontSize: "16px", color: "#666", marginBottom: "20px" }}>
-        Although this is the page for verifiers, holders are also able to
+        Verify certs here. Holders are also able to
         verifry certs here by filling in VC URI.
-      </p>
-      {/* ↓<a></a>は要らない */}
-      <Link href="/">
-        <button
-          style={{
-            textDecoration: "underline",
-            fontSize: "15px",
-            backgroundColor: "transparent",
-            border: "none",
-            cursor: "pointer",
-            color: "#0070f3",
-          }}
-        >
-          Back to holder&apos;s page
-        </button>
-      </Link>
-      <br></br>
-      <Link href="/mintSBT">
-        <button
-          style={{
-            textDecoration: "underline",
-            fontSize: "15px",
-            backgroundColor: "transparent",
-            border: "none",
-            cursor: "pointer",
-            color: "#0070f3",
-          }}
-        >
-          Go to our cert minting page
-        </button>
-      </Link>
-      <p>
-        <br></br>
       </p>
 
       {/* SBTのURI入力フォーム */}
