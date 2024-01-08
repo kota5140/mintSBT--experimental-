@@ -68,7 +68,7 @@ const IndexPage: React.FC = () => {
 
     const onClickMint = async () => {
         try {
-            createJsonData();
+            await createJsonData();
             if (!toAddress || !jsonUrl) {
                 // Handle validation errors
                 return;
@@ -182,12 +182,10 @@ const IndexPage: React.FC = () => {
                         }}
                     >
                         {imageUrl && imageFile ? (
-                            <Image
+                            <img
                                 src={imageUrl}
                                 alt="アップロード画像"
-                                width={FIELD_SIZE}
-                                height={FIELD_SIZE}
-                                objectFit="cover"
+                                style={{ objectFit: "cover", width: "100%", height: "100%" }}
                             />
                         ) : (
                             "+ Upload an image (This might take a while)"

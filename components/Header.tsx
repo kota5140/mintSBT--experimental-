@@ -53,7 +53,7 @@ function Header() {
         // router.push("/q&a");
         break;
       case "Verify VC":
-        router.push("/verifyVC");
+        router.push("/verifier");
         break;
       default:
         break;
