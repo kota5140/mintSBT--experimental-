@@ -24,7 +24,7 @@ export const useGetJsonUrl = ({ string }: UseGetJsonUrlProps) => {
 
         pinDataToIPFS();
     }, [string]);
-    console.log(jsonUrl);
+    //console.log(jsonUrl);
 
     return { jsonUrl };
 };

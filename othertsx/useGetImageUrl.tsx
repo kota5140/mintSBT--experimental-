@@ -26,7 +26,7 @@ export const useGetImageUrl = ({ file }: UseGetImageUrlProps) => {
 
         pinImageToIPFS();
     }, [file]);
-    console.log(imageUrl);
+    //console.log(imageUrl);
 
     return { imageUrl };
 };
