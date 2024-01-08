@@ -1,10 +1,9 @@
 // pages/mintSBT.tsx
-
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import React, { InputHTMLAttributes, forwardRef } from "react";
-import { ethers } from 'ethers';
-import Link from 'next/link'; // Import Link from next/link
-import contractConfig from '../config'; // Update the path based on your project structure
+import { ethers } from "ethers";
+import Link from "next/link"; // Import Link from next/link
+import contractConfig from "../config"; // Update the path based on your project structure
 import { useRef } from "react";
 import InputImage from "../othertsx/index";
 import { useGetImageUrl } from "../othertsx/useGetImageUrl";
@@ -25,19 +24,10 @@ const IndexPage: React.FC = () => {
     const [toAddress, setToAddress] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [description, setDescription] = useState<string>('');
-    const [issuerDid, setIssuerDid] = useState<string>('');
-    const [year, setYear] = useState<string>('');
-    const [month, setMonth] = useState<string>('');
-    const [day, setDay] = useState<string>('');
-    const [details, setDetails] = useState<string>('');
-    const [holderDid, setHolderDid] = useState<string>('');
     const [mintStatus, setMintStatus] = useState<string>('');
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [jsonData, setJsonData] = useState<any | null>(null);
-    const [jsonVCData, setJsonVCData] = useState<any | null>(null);
-    const [issuerKeyPath, setIssuerKeyPath] = useState<string>('');
-    const [issuaranceDate, setIssuaranceDate] = useState<string>('');
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget?.files && e.currentTarget.files[0]) {
@@ -57,8 +47,6 @@ const IndexPage: React.FC = () => {
     // state (imageFile)が更新されたら、画像URLを作成する。
     const { imageUrl } = useGetImageUrl({ file: imageFile });
     const { jsonUrl } = useGetJsonUrl({ string: jsonData });
-    const { jsonVCUrl } = useGetJsonVCUrl({ string: jsonVCData });
-
 
     useEffect(() => {
         const checkMetaMaskClient = async () => {
@@ -68,7 +56,7 @@ const IndexPage: React.FC = () => {
             }
 
             // Set up the event listener for account changes
-            window.ethereum.on('accountsChanged', (newAccounts: string[]) => {
+            window.ethereum.on("accountsChanged", (newAccounts: any) => {
                 setAccount(newAccounts[0]);
             });
 
@@ -80,27 +68,31 @@ const IndexPage: React.FC = () => {
     }, []);
 
     const onClickConnect = async () => {
-        try {
-            const newAccounts = await window.ethereum.request({
-                method: 'eth_requestAccounts',
-            });
-
-            const currentAccount = newAccounts[0];
-            setAccount(currentAccount);
-
-            if (currentAccount) {
-                const provider = new ethers.BrowserProvider(window.ethereum);
-                const signer = await provider.getSigner();
-                const newContract = new ethers.Contract(
-                    contractConfig.address,
-                    contractConfig.abi,
-                    signer
+        const onClickConnect = async () => {
+            try {
+                const newAccounts = await window.ethereum.request<string[] | undefined>(
+                    {
+                        method: "eth_requestAccounts",
+                    }
                 );
-                setContract(newContract);
+
+                const currentAccount: string | undefined = newAccounts?.[0];
+                setAccount(currentAccount || null);
+
+                if (currentAccount) {
+                    const provider = new ethers.BrowserProvider(window.ethereum);
+                    const signer = await provider.getSigner();
+                    const newContract = new ethers.Contract(
+                        contractConfig.address,
+                        contractConfig.abi,
+                        signer
+                    );
+                    setContract(newContract);
+                }
+            } catch (error) {
+                console.error(error);
             }
-        } catch (error) {
-            console.error(error);
-        }
+        };
     };
 
     const onClickMint = async () => {
@@ -114,7 +106,7 @@ const IndexPage: React.FC = () => {
             await mintTx.wait();
 
             setMintStatus(`Minted token to ${toAddress}`);
-            setToAddress('');
+            setToAddress("");
             setJsonData(null);
         } catch (error) {
             console.error(error);
@@ -129,47 +121,23 @@ const IndexPage: React.FC = () => {
             description,
             image: imageUrl, // ここは実際の画像URIに変更する必要があります
             attributes: [{ value: 1 }],
-            verifiableCredentials: [jsonVCUrl],
+            verifiableCredentials: [""],
         });
         console.log(jsonData);
     };
 
-    const createJsonVCData = async () => {
-        // try {
-        //     // 作成するJSONファイルのデータを構築
-        //     const vcData = await createVerifiableCredential("issuer_key.jwk", issuerDid, holderDid, name, issuaranceDate, details);
-        //     setJsonVCData(vcData);
-        // } catch (error) {
-        //     console.error(error);
-        //     // Handle error if createVerifiableCredential fails
-        // }
-    };
-
-    const createIssuanceDate = () => {
-        // Year, Month, Day の各項目から取得
-        const yearValue = parseInt(year, 10) || 2024;
-        const monthValue = parseInt(month, 10) || 1;
-        const dayValue = parseInt(day, 10) || 1;
-
-        // ISO 8601 形式の文字列に変換
-        const isoDateString = new Date(yearValue, monthValue - 1, dayValue).toISOString();
-
-        // state の更新
-        setIssuaranceDate(isoDateString);
-    };
-
     return (
-        <div style={{ textAlign: 'center' }}>
-            <h1 style={{ fontSize: '30px', margin: '20px 0' }}>SSICerts</h1>
+        <div style={{ textAlign: "center" }}>
+            <h1 style={{ fontSize: "30px", margin: "20px 0" }}>SSICerts</h1>
             <Link href="/Verification_verifier">
                 <button
                     style={{
-                        textDecoration: 'underline',
-                        fontSize: '15px',
-                        backgroundColor: 'transparent',
-                        border: 'none',
-                        cursor: 'pointer',
-                        color: '#0070f3'
+                        textDecoration: "underline",
+                        fontSize: "15px",
+                        backgroundColor: "transparent",
+                        border: "none",
+                        cursor: "pointer",
+                        color: "#0070f3",
                     }}
                 >
                     Back to verifier&apos;s page
@@ -177,26 +145,28 @@ const IndexPage: React.FC = () => {
             </Link>
             <div>
                 <h2>Accounts</h2>
-                <p id="accountStatus">{account ? account : 'Not Connected'}</p>
+                <p id="accountStatus">{account ? account : "Not Connected"}</p>
                 <button
                     onClick={onClickConnect}
                     type="button"
                     style={{
-                        backgroundColor: 'blue',
-                        color: 'white',
-                        padding: '10px',
-                        border: 'none',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                        textDecoration: 'none',
-                        fontSize: '15px',
-                        marginTop: '10px',
+                        backgroundColor: "blue",
+                        color: "white",
+                        padding: "10px",
+                        border: "none",
+                        borderRadius: "5px",
+                        cursor: "pointer",
+                        textDecoration: "none",
+                        fontSize: "15px",
+                        marginTop: "10px",
                     }}
                 >
                     Connect
                 </button>
             </div>
-            <p><br></br></p>
+            <p>
+                <br></br>
+            </p>
             <div>
                 <input
                     type="text"
@@ -204,13 +174,13 @@ const IndexPage: React.FC = () => {
                     value={toAddress}
                     onChange={(e) => setToAddress(e.target.value)}
                     style={{
-                        width: '400px',
-                        padding: '8px',
-                        margin: '5px 0',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        boxSizing: 'border-box',
-                        color: 'black',
+                        width: "400px",
+                        padding: "8px",
+                        margin: "5px 0",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                        boxSizing: "border-box",
+                        color: "black",
                     }}
                 />
                 <br></br>
@@ -220,13 +190,13 @@ const IndexPage: React.FC = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     style={{
-                        width: '400px',
-                        padding: '8px',
-                        margin: '5px 0',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        boxSizing: 'border-box',
-                        color: 'black',
+                        width: "400px",
+                        padding: "8px",
+                        margin: "5px 0",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                        boxSizing: "border-box",
+                        color: "black",
                     }}
                 />
                 <br></br>
@@ -235,15 +205,15 @@ const IndexPage: React.FC = () => {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     style={{
-                        width: '400px',
-                        height: '100px',  // 適切な高さに調整してください
-                        padding: '8px',
-                        margin: '5px 0',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        boxSizing: 'border-box',
-                        color: 'black',
-                        resize: 'vertical',  // この行を追加すると縦方向にのみリサイズができます
+                        width: "400px",
+                        height: "100px", // 適切な高さに調整してください
+                        padding: "8px",
+                        margin: "5px 0",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                        boxSizing: "border-box",
+                        color: "black",
+                        resize: "vertical", // この行を追加すると縦方向にのみリサイズができます
                     }}
                 />
                 <br></br>
@@ -265,7 +235,7 @@ const IndexPage: React.FC = () => {
                         }}
                     >
                         {imageUrl && imageFile ? (
-                            <img
+                            <Image
                                 src={imageUrl}
                                 alt="アップロード画像"
                                 style={{ objectFit: "cover", width: "100%", height: "100%" }}
@@ -297,107 +267,10 @@ const IndexPage: React.FC = () => {
                             margin: '0 auto', // これを追加して中央寄せ
                         }}
                     >
-                        Cancel the image
+                        Cancel
                     </button>
-                    <br></br>
-                    <br></br>
-                    <input
-                        type="text"
-                        placeholder="Enter issuer's DID"
-                        value={issuerDid}
-                        onChange={(e) => setIssuerDid(e.target.value)}
-                        style={{
-                            width: '400px',
-                            padding: '8px',
-                            margin: '5px 0',
-                            borderRadius: '5px',
-                            border: '1px solid #ccc',
-                            boxSizing: 'border-box',
-                            color: 'black',
-                        }}
-                    />
-                    <br></br>
+
                 </>
-                <p>Issuarance Date</p>
-                <input
-                    type="text"
-                    placeholder="Year"
-                    value={year}
-                    onChange={(e) => setYear(e.target.value)}
-                    style={{
-                        width: '100px',
-                        padding: '8px',
-                        margin: '5px 0',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        boxSizing: 'border-box',
-                        color: 'black',
-                    }}
-                />
-                <input
-                    type="text"
-                    placeholder="Month"
-                    value={month}
-                    onChange={(e) => setMonth(e.target.value)}
-                    style={{
-                        width: '100px',
-                        padding: '8px',
-                        margin: '5px 0',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        boxSizing: 'border-box',
-                        color: 'black',
-                    }}
-                />
-                <input
-                    type="text"
-                    placeholder="Day"
-                    value={day}
-                    onChange={(e) => setDay(e.target.value)}
-                    style={{
-                        width: '100px',
-                        padding: '8px',
-                        margin: '5px 0',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        boxSizing: 'border-box',
-                        color: 'black',
-                    }}
-                />
-                <br></br>
-                <input
-                    type="text"
-                    placeholder="Enter recipient's DID"
-                    value={holderDid}
-                    onChange={(e) => setHolderDid(e.target.value)}
-                    style={{
-                        width: '400px',
-                        padding: '8px',
-                        margin: '5px 0',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        boxSizing: 'border-box',
-                        color: 'black',
-                    }}
-                />
-                <br></br>
-                <textarea
-                    placeholder="More details (anything)"
-                    value={details}
-                    onChange={(e) => setDetails(e.target.value)}
-                    style={{
-                        width: '400px',
-                        height: '100px',  // 適切な高さに調整してください
-                        padding: '8px',
-                        margin: '5px 0',
-                        borderRadius: '5px',
-                        border: '1px solid #ccc',
-                        boxSizing: 'border-box',
-                        color: 'black',
-                        resize: 'vertical',  // この行を追加すると縦方向にのみリサイズができます
-                    }}
-                />
-                <br></br>
                 <button
                     onClick={onClickMint}
                     disabled={!contract || !toAddress || !name}
@@ -416,7 +289,7 @@ const IndexPage: React.FC = () => {
                 </button>
                 <p style={{ fontSize: '16px', marginTop: '10px' }}>{mintStatus}</p>
             </div>
-        </div >
+        </div>
     );
 };
 

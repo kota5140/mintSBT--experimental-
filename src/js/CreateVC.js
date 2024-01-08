@@ -64,7 +64,6 @@ const crypto = require("crypto");
 <<<<<<< HEAD
 <<<<<<< HEAD
 async function main() {
-<<<<<<< HEAD
   // ここでは"issuer_key.jwk" ファイルから秘密鍵（署名に使うやつ）を読み込み、文字列に変換します。
   const issuerKey = fs.readFileSync("issuer_key.jwk").toString();
   // 読み込んだ秘密鍵から DID（分散識別子）を生成します。これは VC の issuer フィールドに設定されます。
@@ -113,6 +112,7 @@ async function main() {
 
   // 署名された VC を JSON ファイルとして保存
   fs.writeFileSync("signed-vc4.json", signedVc);
+<<<<<<< HEAD
 =======
     // ここでは"issuer_key.jwk" ファイルから秘密鍵（署名に使うやつ）を読み込み、文字列に変換します。
     const issuerKey = fs.readFileSync("issuer_key.jwk").toString();
@@ -155,6 +155,8 @@ async function createVerifiableCredential(
     // 署名された VC を JSON ファイルとして保存
     fs.writeFileSync("signed-vc4.json", signedVc)
 >>>>>>> 2ed7a144c03dd58a99029d0fad71cef59a51a672
+=======
+>>>>>>> 3c625739939e8e2d72874785b7cf8e1ed3a2ef3e
 }
 
 main()
@@ -163,8 +165,8 @@ main()
   })
   .catch((err) => {
     console.error("Error creating Verifiable Credential:", err);
-<<<<<<< HEAD
   });
+<<<<<<< HEAD
 =======
 });
 >>>>>>> 2ed7a144c03dd58a99029d0fad71cef59a51a672
@@ -232,3 +234,5 @@ module.exports = createVerifiableCredential;
 
 module.exports = createVerifiableCredential;
 >>>>>>> 5db99e5 (a)
+=======
+>>>>>>> 3c625739939e8e2d72874785b7cf8e1ed3a2ef3e
