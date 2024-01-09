@@ -14,25 +14,22 @@ const Home = () => {
     >
       <Toolbar />
       <Typography paragraph>
-        社会変革をリードする大学へ
-        世界は、地球温暖化、パンデミック、飢餓、資源の枯渇、災害、高齢化をはじめとして多様で深刻な課題に直面し、閉塞感に覆われています。
-        大阪大学は、深刻な社会課題の解決に果敢に取り組むため、新たな知と人材と最新のテクノロジーを導入して社会の閉塞感を打破し、
-        様々な社会システム変革を通して「いのち」と「くらし」を守るための強靭で持続可能な未来社会を創造する教育研究を推進し、
-        社会変革をリードする大学となります。
+        当プラットフォームは、ブロックチェーン技術の力を借りて、資格証明の管理と発行を未来志向かつ効率的に革新しています。
+
+        現代社会はさまざまな課題に直面しており、環境の変化、健康の脅威、飢餓、資源の減少、自然災害、高齢化などがその中に含まれます。これらの課題に立ち向かいながらも、私たちは新しい解決策を見つけるための柔軟で効果的な手段を求めています。当プラットフォームは、資格証明の管理と発行において、ブロックチェーン技術の利点を最大限に活かし、これらの課題に対応する手助けとなります。
+
+        私たちは未来志向のリーダーシップを体現し、ブロックチェーンの透明性とセキュリティを駆使して資格証明のプロセスを変革しています。私たちの目標は、社会において新しい価値を生み出し、未来のために確固たる基盤を築くことです。
+
+        一緒に協力し、資格証明の分野で新たな一歩を踏み出しましょう。未来への挑戦が、より効果的で効率的な資格証明の未来を築く手助けとなります。
       </Typography>
       <Typography paragraph>
-        Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-        ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar elementum
-        integer enim neque volutpat ac tincidunt. Ornare suspendisse sed nisi
-        lacus sed viverra tellus. Purus sit amet volutpat consequat mauris.
-        Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-        vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra
-        accumsan in. In hendrerit gravida rutrum quisque non tellus orci ac.
-        Pellentesque nec nam aliquam sem et tortor. Habitant morbi tristique
-        senectus et. Adipiscing elit duis tristique sollicitudin nibh sit.
-        Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra
-        maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin
-        aliquam ultrices sagittis orci a.
+        Our platform leverages the power of blockchain technology to revolutionize the management and issuance of credentials in a forward-thinking and efficient manner.
+
+        In the face of contemporary challenges such as environmental shifts, health crises, hunger, resource depletion, natural disasters, and an aging population, societies seek flexible and effective means to find new solutions. Our platform addresses these challenges by utilizing the advantages of blockchain technology in credential management and issuance, providing support in navigating these complex issues.
+
+        We embody a forward-thinking leadership approach, transforming the credentialing process with transparency and security afforded by blockchain. Our goal is to generate new value in society and establish a robust foundation for the future through this transformation.
+
+        Let&apos;s collaborate to take a significant step forward in the field of credentialing. Embracing the challenges of the future will contribute to building a more effective and efficient future for credential management.
       </Typography>
     </Box>
   );
