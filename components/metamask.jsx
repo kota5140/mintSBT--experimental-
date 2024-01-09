@@ -8,6 +8,7 @@ import { useSDK, MetaMaskProvider } from "@metamask/sdk-react";
 import { formatAddress } from "../lib/utils";
 import { useRouter } from "next/router";
 import { setLoginStatus } from "../pages/_app";
+import Box from "@mui/material/Box";
 
 export const ConnectWalletButton = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -177,7 +178,8 @@ export const ConnectWalletButton = () => {
             },
           }}
         >
-          Connect Wallet
+          <Box sx={{ display: { xs: "none", md: "flex" } }}>Connect Wallet</Box>
+          <Box sx={{ display: { xs: "flex", md: "none" } }}>Connect</Box>
         </Button>
       )}
     </div>
