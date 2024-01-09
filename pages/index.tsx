@@ -5,13 +5,24 @@ import Image from "next/image";
 
 const Home = () => {
   return (
-    <div style={{ height: "100vh", flex: 5 }}>
-      {" "}
-      <Image
-        fill={true}
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      <img
         src={top.src}
         alt="Top Page"
-        style={{ maxHeight: "100%", width: "100%" }}
+        style={{
+          maxWidth: "100%",
+          maxHeight: "100%",
+          width: "auto",
+          height: "auto",
+        }}
       />
     </div>
   );
