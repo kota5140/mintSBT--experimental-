@@ -20,7 +20,6 @@ export type Props = {
 };
 
 const IndexPage: React.FC = () => {
-    const [account, setAccount] = useState<string | null>(null);
     const [contract, setContract] = useState<any | null>(null);
     const [toAddress, setToAddress] = useState<string>("");
     const [name, setName] = useState<string>("");
@@ -61,7 +60,6 @@ const IndexPage: React.FC = () => {
             setContract(newContract);
             connectcontract();
         };
-
         // ページが読み込まれたときに実行
         connectcontract();
     }, []);
@@ -99,22 +97,10 @@ const IndexPage: React.FC = () => {
 
     return (
         <div style={{ textAlign: "center" }}>
-            <h1 style={{ fontSize: "30px", margin: "20px 0" }}>SSICerts</h1>
-            <Link href="/Verification_verifier">
-                <button
-                    style={{
-                        textDecoration: "underline",
-                        fontSize: "15px",
-                        backgroundColor: "transparent",
-                        border: "none",
-                        cursor: "pointer",
-                        color: "#0070f3",
-                    }}
-                >
-                    Back to verifier&apos;s page
-                </button>
-            </Link>
             <div>
+                <br></br>
+                <br></br>
+                <br></br>
                 <input
                     type="text"
                     placeholder="Enter recipient's address"

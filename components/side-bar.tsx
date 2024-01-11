@@ -26,7 +26,7 @@ function LeftBar() {
     { text: "Home", icon: <HomeIcon /> },
     { text: "Issue VC", icon: <HistoryEduIcon />, path: '/mintSBT' },
     { text: "Verify VC", icon: <PersonSearchIcon />, path: '/verifyVC' },
-    { text: "Manage SBT", icon: <TokenIcon /> },
+    { text: "Manage Certs", icon: <TokenIcon />, path: 'manageCerts' },
   ];
   const settingItems = [
     { text: "Help Center", icon: <HelpCenterIcon /> },
@@ -44,8 +44,8 @@ function LeftBar() {
       case "Issue VC":
         router.push("/mypage/issueVC");
         break;
-      case "Manage SBT":
-        router.push("/mypage/manage");
+      case "Manage Certs":
+        router.push("/manageCerts");
         break;
       default:
         break;
