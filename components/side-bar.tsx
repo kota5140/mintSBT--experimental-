@@ -16,6 +16,7 @@ import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import TokenIcon from "@mui/icons-material/MonetizationOn";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import mintSBTWhitelist from '../src/js/whitelist';
 
 const drawerWidth = 240;
 
@@ -33,7 +34,7 @@ function LeftBar() {
     { text: "Settings", icon: <SettingsIcon /> },
   ];
 
-  const handleListMenuItemClick = (text: string) => {
+  const handleListMenuItemClick = async (text: string) => {
     switch (text) {
       case "Home":
         router.push("/mypage");
@@ -42,7 +43,24 @@ function LeftBar() {
         router.push("/verifyVC");
         break;
       case "Issue Certs":
-        router.push("/mypage/issueVC");
+        try {
+          const accounts = await window.ethereum.request({ method: 'eth_accounts' }) as string[];
+          const account = accounts[0];
+          console.log(account);
+
+          // Check if the user's account is in the whitelist
+          if (!mintSBTWhitelist.includes(BigInt(account))) {
+            // User is not allowed, show error and don't proceed with navigation
+            confirm('Access to this page is restricted for this account.');
+            return;
+          }
+
+          // User is allowed, proceed with navigation
+          router.push("/mintSBT");
+        } catch (error) {
+          // Handle error from window.ethereum.request
+          console.error("Error fetching accounts:", error);
+        }
         break;
       case "Manage Certs":
         router.push("/manageCerts");
@@ -82,7 +100,7 @@ function LeftBar() {
         <Toolbar />
         <Divider />
         <List>
-          {menuItems.map((item) => (
+          {/* {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
               <Link href={`${item.path}`} passHref>
                 <ListItemButton component="a">
@@ -90,6 +108,16 @@ function LeftBar() {
                   <ListItemText primary={item.text} />
                 </ListItemButton>
               </Link>
+            </ListItem>
+          ))} */}
+          {menuItems.map((item) => (
+            <ListItem key={item.text} disablePadding>
+              {/* <Link href={`${item.path}`} passHref> */}
+              <ListItemButton component="a" onClick={() => handleListMenuItemClick(item.text)}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItemButton>
+              {/* </Link> */}
             </ListItem>
           ))}
         </List>
