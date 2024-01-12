@@ -118,7 +118,7 @@ const Verification: React.FC = () => {
             <Box mt={2} textAlign="center">
               <Typography
                 variant="body1"
-                color={verificationResult === "Verified" ? "success" : "error"}
+                color={verificationResult === "Verified" ? "green" : "red"}
               >
                 {verificationResult}
               </Typography>

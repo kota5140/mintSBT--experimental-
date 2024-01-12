@@ -2,6 +2,12 @@
 import React, { useState } from "react";
 import Link from "next/link"; // Import Link from next/link
 import axios from "axios";
+import { ethers } from "ethers";
+import contractConfig from "../config.js";
+import { Grid, Paper, TextField, Typography, Box, Button } from "@mui/material";
+import PersonSearchIcon from "@mui/icons-material/PersonSearch";
+import { teal } from "@mui/material/colors";
+import Avatar from "@mui/material/Avatar";
 
 const Verification: React.FC = () => {
   const [VCURI, setVCURI] = useState("");
@@ -44,62 +50,52 @@ const Verification: React.FC = () => {
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1 style={{ fontSize: "30px", margin: "20px 0" }}>
-        VC Verification for verifiers
-      </h1>
-      <p style={{ fontSize: "16px", color: "#666", marginBottom: "20px" }}>
-        Verify certs here. Holders are also able to
-        verifry certs here by filling in VC URI.
-      </p>
-
-      {/* SBTのURI入力フォーム */}
-      <label>
-        VC URI:
-        <input
-          type="text"
-          value={VCURI}
-          onChange={(e) => setVCURI(e.target.value)}
-          style={{
-            padding: "8px",
-            margin: "5px 0",
-            borderRadius: "5px",
-            border: "1px solid #ccc",
-            boxSizing: "border-box",
-            color: "black",
-          }}
-        />
-      </label>
-
-      {/* 検証ボタン */}
-      <button
-        style={{
-          backgroundColor: "green",
-          color: "white",
-          padding: "10px",
-          border: "none",
-          borderRadius: "5px",
-          cursor: "pointer",
-        }}
-        onClick={verify}
-      >
-        Verify
-      </button>
-      {/* 検証結果をブラウザに表示 */}
-      {verificationResult !== null && (
-        <div>
-          <h2>Verification Result:</h2>
-          <p
-            style={{
-              color: verificationResult === "Verified" ? "green" : "red",
-              fontSize: "30px",
-            }}
+    <Grid
+      container
+      justifyContent="center"
+      alignItems="center"
+      style={{ height: "100vh" }}
+    >
+      <Paper elevation={3} sx={{ p: 4, width: "350px", m: "20px auto" }}>
+        <Grid container direction="column" alignItems="center" spacing={2}>
+          <Avatar sx={{ bgcolor: teal[400] }}>
+            <PersonSearchIcon />
+          </Avatar>
+          <Typography variant="h5" sx={{ mt: 2, mb: 3 }}>
+            Verify VC
+          </Typography>
+          <TextField
+            label="VC URI"
+            variant="standard"
+            fullWidth
+            value={VCURI}
+            onChange={(e) => setVCURI(e.target.value)}
+          />
+          <Button
+            type="submit"
+            color="primary"
+            variant="contained"
+            fullWidth
+            onClick={verify}
           >
-            {verificationResult}
-          </p>
-        </div>
-      )}
-    </div>
+            Verify
+          </Button>
+          {verificationResult !== null && (
+            <Box mt={2} textAlign="center">
+              <Typography
+                variant="body1"
+                color={verificationResult === "Verified" ? "green" : "red"}
+              >
+                {verificationResult}
+              </Typography>
+            </Box>
+          )}
+          <Typography variant="caption" mt={2}>
+            <Link href="#">How To Verify a VC?</Link>
+          </Typography>
+        </Grid>
+      </Paper>
+    </Grid>
   );
 };
 
