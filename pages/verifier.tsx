@@ -62,7 +62,7 @@ const Verification: React.FC = () => {
             <PersonSearchIcon />
           </Avatar>
           <Typography variant="h5" sx={{ mt: 2, mb: 3 }}>
-            Verify VC
+            Verify Certs
           </Typography>
           <TextField
             label="VC URI"
@@ -91,7 +91,7 @@ const Verification: React.FC = () => {
             </Box>
           )}
           <Typography variant="caption" mt={2}>
-            <Link href="#">How To Verify a VC?</Link>
+            <Link href="#">How To Verify a cert?</Link>
           </Typography>
         </Grid>
       </Paper>

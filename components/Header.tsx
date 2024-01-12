@@ -13,7 +13,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import { MetaMask } from "./metamask";
 import { useRouter } from "next/router";
 
-const pages = ["Term of Use", "Blog", "Q&A", "Verify VC"];
+const pages = ["Term of Use", "Blog", "Q&A", "Verify Certs"];
 const settings = ["Account", "Settings", "Disconnect", "Help"]; // Corrected typo in "Account"
 
 function Header() {
@@ -52,7 +52,7 @@ function Header() {
       case "Q&A":
         // router.push("/q&a");
         break;
-      case "Verify VC":
+      case "Verify Certs":
         router.push("/verifier");
         break;
       default:

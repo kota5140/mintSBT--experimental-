@@ -23,9 +23,9 @@ function LeftBar() {
   const router = useRouter();
 
   const menuItems = [
-    { text: "Home", icon: <HomeIcon /> },
-    { text: "Issue VC", icon: <HistoryEduIcon />, path: '/mintSBT' },
-    { text: "Verify VC", icon: <PersonSearchIcon />, path: '/verifyVC' },
+    { text: "Home", icon: <HomeIcon />, path: '/mypage' },
+    { text: "Issue Certs", icon: <HistoryEduIcon />, path: '/mintSBT' },
+    { text: "Verify Certs", icon: <PersonSearchIcon />, path: '/verifyVC' },
     { text: "Manage Certs", icon: <TokenIcon />, path: 'manageCerts' },
   ];
   const settingItems = [
@@ -38,10 +38,10 @@ function LeftBar() {
       case "Home":
         router.push("/mypage");
         break;
-      case "Verify VC":
+      case "Verify Certs":
         router.push("/verifyVC");
         break;
-      case "Issue VC":
+      case "Issue Certs":
         router.push("/mypage/issueVC");
         break;
       case "Manage Certs":
