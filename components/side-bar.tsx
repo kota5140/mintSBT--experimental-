@@ -100,16 +100,6 @@ function LeftBar() {
         <Toolbar />
         <Divider />
         <List>
-          {/* {menuItems.map((item) => (
-            <ListItem key={item.text} disablePadding>
-              <Link href={`${item.path}`} passHref>
-                <ListItemButton component="a">
-                  <ListItemIcon>{item.icon}</ListItemIcon>
-                  <ListItemText primary={item.text} />
-                </ListItemButton>
-              </Link>
-            </ListItem>
-          ))} */}
           {menuItems.map((item) => (
             <ListItem key={item.text} disablePadding>
               {/* <Link href={`${item.path}`} passHref> */}
