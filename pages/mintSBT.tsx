@@ -1,4 +1,3 @@
-// export default IndexPage;
 // pages/mintSBT.tsx
 
 import { useEffect, useState } from "react";
@@ -10,7 +9,7 @@ import { useRef } from "react";
 import InputImage from "../othertsx/index";
 import { useGetImageUrl } from "../othertsx/useGetImageUrl";
 import { useGetJsonUrl } from "../othertsx/useGetJsonUrl";
-import Image from "next/image";
+import { useGetJsonVCUrl } from "../othertsx/useGetJsonVCUrl";
 
 const IMAGE_ID = "imageId";
 const FIELD_SIZE = 210;
@@ -28,6 +27,8 @@ const IndexPage: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [jsonData, setJsonData] = useState<any | null>(null);
+    // const [jsonVCData, setJsonVCData] = useState<any | null>(null);
+    const [VCURI, setVCURI] = useState<string>("");
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.currentTarget?.files && e.currentTarget.files[0]) {
@@ -47,6 +48,7 @@ const IndexPage: React.FC = () => {
     // state (imageFile)が更新されたら、画像URLを作成する。
     const { imageUrl } = useGetImageUrl({ file: imageFile });
     const { jsonUrl } = useGetJsonUrl({ string: jsonData });
+    // const { jsonVCUrl } = useGetJsonVCUrl({ string: jsonVCData });
 
     useEffect(() => {
         const connectcontract = async () => {
@@ -66,6 +68,7 @@ const IndexPage: React.FC = () => {
 
     const onClickMint = async () => {
         try {
+            // await createJsonVCData();
             await createJsonData();
             if (!toAddress || !jsonUrl) {
                 // Handle validation errors
@@ -83,6 +86,34 @@ const IndexPage: React.FC = () => {
         }
     };
 
+    // const createJsonVCData = async () => {
+    //     // 作成するJSONファイルのデータを構築
+    //     try {
+    //         // You may need to provide appropriate values for these parameters
+    //         const issuerKeyPath = "path/to/issuer-key.pem";
+    //         const issuerDid = "did:example:issuer";
+    //         const holderDid = "did:example:holder";
+    //         const name = "Certificate Name";
+    //         const issuanceDate = new Date().toISOString();
+    //         const details = "Certificate Details";
+
+    //         const jsonVC = await createVerifiableCredential(
+    //             issuerKeyPath,
+    //             issuerDid,
+    //             holderDid,
+    //             name,
+    //             issuanceDate,
+    //             details
+    //         );
+
+    //         setJsonVCData(JSON.parse(jsonVC));
+    //         console.log(jsonVCData);
+    //     } catch (error) {
+    //         console.error(error);
+    //         // Handle error as needed
+    //     }
+    // };
+
     const createJsonData = async () => {
         // 作成するJSONファイルのデータを構築
         setJsonData({
@@ -90,9 +121,9 @@ const IndexPage: React.FC = () => {
             description,
             image: imageUrl, // ここは実際の画像URIに変更する必要があります
             attributes: [{ value: 1 }],
-            verifiableCredentials: [""],
+            verifiableCredentials: [VCURI],
         });
-        console.log(jsonData);
+        console.log(jsonUrl);
     };
 
     return (
@@ -203,6 +234,22 @@ const IndexPage: React.FC = () => {
                         Cancel
                     </button>
                 </>
+                <input
+                    type="text"
+                    placeholder="Enter VC URI"
+                    value={VCURI}
+                    onChange={(e) => setVCURI(e.target.value)}
+                    style={{
+                        width: "400px",
+                        padding: "8px",
+                        margin: "5px 0",
+                        borderRadius: "5px",
+                        border: "1px solid #ccc",
+                        boxSizing: "border-box",
+                        color: "black",
+                    }}
+                />
+                <br></br>
                 <button
                     onClick={onClickMint}
                     disabled={!contract || !toAddress || !name}
