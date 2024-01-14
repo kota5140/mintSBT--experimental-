@@ -8,16 +8,11 @@ import { Grid, Paper, TextField, Typography, Box, Button } from "@mui/material";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
 import { teal } from "@mui/material/colors";
 import Avatar from "@mui/material/Avatar";
+import FileCopyIcon from '@mui/icons-material/FileCopy';
 
 const ManageCerts = () => {
     const [contract, setContract] = useState<any | null>(null);
-
-    const [idInputOfBurn, setIdInputOfBurn] = useState('');
-    const [burnStatus, setBurnStatus] = useState('');
-
-    const [idInputOfDisclosure, setIdInputOfDisclosure] = useState('');
-    const [discloseStatus, setDiscloseStatus] = useState('');
-
+    const [discloseStatuses, setDiscloseStatuses] = useState<{ [tokenId: string]: string }>({});
     const [ownedSBTs, setOwnedSBTs] = useState<any[]>([]);
 
     useEffect(() => {
@@ -78,11 +73,9 @@ const ManageCerts = () => {
             // await contract.burn(idInputOfBurn);
             // setBurnStatus(`Token ${idInputOfBurn} burned successfully`);
             await contract.burn(tokenId);
-            setBurnStatus(`Token ${tokenId} burned successfully`);
             getOwnedSBTs(); // Refresh owned tokens after burning
         } catch (error) {
             console.error(error);
-            setBurnStatus(`Error burning token ${tokenId}`);
         }
     };
 
@@ -102,10 +95,10 @@ const ManageCerts = () => {
             if (userChoice1) {
                 fullydisclose(tokenId);
             } else {
-                const userChoice2 = confirm('Are you going to partially disclose information?');
-                if (userChoice2) {
-                    partiallydisclose();
-                }
+                //const userChoice2 = confirm('Are you going to partially disclose information?');
+                // if (userChoice2) {
+                //     //partiallydisclose();
+                // }
             }
         } catch (error) {
             console.error(error);
@@ -125,7 +118,10 @@ const ManageCerts = () => {
             const sbtMetadata = await response.json();
 
             const vcMetadataUrl = sbtMetadata.verifiableCredentials[0];
-            setDiscloseStatus(vcMetadataUrl);
+            setDiscloseStatuses((prevStatuses) => ({
+                ...prevStatuses,
+                [id]: vcMetadataUrl,
+            }));
         } catch (error) {
             console.error(error);
             // Handle full disclosure error
@@ -139,6 +135,12 @@ const ManageCerts = () => {
             console.error(error);
             // Handle partial disclosure error
         }
+    };
+
+    const copyToClipboard = (text: string) => {
+        navigator.clipboard.writeText(text);
+        // Optionally provide feedback to the user that the text has been copied
+        // For example, you can set a state to display a message
     };
 
     return (
@@ -165,17 +167,19 @@ const ManageCerts = () => {
                     >
                         Display your certs
                     </Button>
+                    <br></br>
                     <ul>
                         {ownedSBTs.map((token) => (
                             <li key={token.tokenId}>
                                 <p>{"ID: " + token.tokenId}</p>
                                 <p>Name: {token.name}</p>
-                                <p>Description: {token.description}</p>
+                                <p style={{ wordBreak: 'break-all' }}>Description: {token.description}</p>
                                 <img
                                     src={token.image}
                                     alt="Token Image"
                                     style={{ maxWidth: '200px', maxHeight: '200px', width: 'auto', height: 'auto' }}
                                 />
+                                <br></br>
                                 <Button
                                     variant="contained"
                                     color="primary"
@@ -183,15 +187,27 @@ const ManageCerts = () => {
                                 >
                                     Disclose
                                 </Button>
-                                {discloseStatus !== null && (
-                                    <Box mt={2} textAlign="center">
-                                        <Typography
-                                            variant="body1"
-                                        >
-                                            {discloseStatus}
-                                        </Typography>
-                                    </Box>
-                                )}
+                                <br></br>
+                                <p>
+                                    {discloseStatuses[token.tokenId] !== null && (
+                                        <Box mt={2} >
+                                            <Typography variant="body1" style={{ wordBreak: 'break-all' }}>
+                                                {discloseStatuses[token.tokenId]}
+                                            </Typography>
+                                            <Box mt={1} textAlign="right">
+                                                <Button
+                                                    variant="outlined"
+                                                    color="primary"
+                                                    size="small"
+                                                    startIcon={<FileCopyIcon />}
+                                                    onClick={() => copyToClipboard(discloseStatuses[token.tokenId])}
+                                                >
+                                                    Copy Link
+                                                </Button>
+                                            </Box>
+                                        </Box>
+                                    )}
+                                </p>
                                 <Button
                                     variant="contained"
                                     color="secondary"
