@@ -8,8 +8,6 @@ Metamask required.
 
 # Author
 
-作成情報を列挙する
-
 * kota5140, Haruki65 (students)
 * Osaka University
 
