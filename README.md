@@ -1,14 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# mintSBT -experimental-
 
-## Getting Started
+To check and delete your SBTs issued on testnet.
 
-```bash
-#for debug
-npm run dev
+Metamask required.
 
-#for build
-npm run build
-```
-See the details [The big picture of SSICerts.pptx](https://github.com/Haruki65/SSICerts/files/13930575/The.big.picture.of.SSICerts.pptx).
+# Usage
 
-The contract development: [https://github.com/Haruki65/SSICertsContract.git]
+
+
+# Author
+
+作成情報を列挙する
+
+* kota5140, Haruki65 (students)
+* Osaka University
+
+# License
+
+[MIT license]
